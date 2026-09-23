@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 
+type Loose = { [K in keyof SiteSettings]?: SiteSettings[K] | undefined };
+
 export const Route = createFileRoute("/admin/_gate/appearance")({
   component: AppearanceAdmin,
 });
@@ -18,10 +20,10 @@ export const Route = createFileRoute("/admin/_gate/appearance")({
 function AppearanceAdmin() {
   const queryClient = useQueryClient();
   const { data } = useQuery(queries.settings);
-  const [form, setForm] = useState<Record<string, unknown>>({});
+  const [form, setForm] = useState<Loose>({});
 
   useEffect(() => {
-    if (data) setForm(data as unknown as Record<string, unknown>);
+    if (data) setForm(data);
   }, [data]);
 
   const save = useMutation({
@@ -36,7 +38,7 @@ function AppearanceAdmin() {
           background_tone: form.background_tone,
           border_intensity: form.border_intensity,
           gradient_intensity: form.gradient_intensity,
-        })
+        } as never)
         .eq("id", data.id);
       if (error) throw error;
     },
@@ -49,7 +51,7 @@ function AppearanceAdmin() {
 
   if (!data) return <p className="text-sm text-muted-foreground">Loading…</p>;
 
-  const colors: Array<[keyof SiteSettings, string]> = [
+  const colors: Array<["primary_accent" | "secondary_accent" | "background_tone", string]> = [
     ["primary_accent", "Primary accent"],
     ["secondary_accent", "Secondary accent"],
     ["background_tone", "Background tone"],

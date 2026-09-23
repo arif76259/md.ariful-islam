@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
+type Loose = { [K in keyof Profile]?: Profile[K] | undefined };
+
 export const Route = createFileRoute("/admin/_gate/profile")({
   component: ProfileAdmin,
 });
@@ -31,10 +33,10 @@ const TEXT_FIELDS: Array<[keyof Profile, string, number]> = [
 function ProfileAdmin() {
   const queryClient = useQueryClient();
   const { data } = useQuery(queries.profile);
-  const [form, setForm] = useState<Record<string, unknown>>({});
+  const [form, setForm] = useState<Loose>({});
 
   useEffect(() => {
-    if (data) setForm(data as unknown as Record<string, unknown>);
+    if (data) setForm(data);
   }, [data]);
 
   const save = useMutation({
@@ -44,7 +46,10 @@ function ProfileAdmin() {
       void id;
       void created_at;
       void updated_at;
-      const { error } = await supabase.from("profile").update(payload).eq("id", data.id);
+      const { error } = await supabase
+        .from("profile")
+        .update(payload as never)
+        .eq("id", data.id);
       if (error) throw error;
     },
     onSuccess: () => {

@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
+type Loose = { [K in keyof SiteSettings]?: SiteSettings[K] | undefined };
+
 export const Route = createFileRoute("/admin/_gate/seo")({
   component: SeoAdmin,
 });
@@ -19,10 +21,10 @@ export const Route = createFileRoute("/admin/_gate/seo")({
 function SeoAdmin() {
   const queryClient = useQueryClient();
   const { data } = useQuery(queries.settings);
-  const [form, setForm] = useState<Record<string, unknown>>({});
+  const [form, setForm] = useState<Loose>({});
 
   useEffect(() => {
-    if (data) setForm(data as unknown as Record<string, unknown>);
+    if (data) setForm(data);
   }, [data]);
 
   const save = useMutation({
@@ -38,7 +40,7 @@ function SeoAdmin() {
           og_description: form.og_description,
           og_image: form.og_image,
           keywords: form.keywords,
-        })
+        } as never)
         .eq("id", data.id);
       if (error) throw error;
     },
