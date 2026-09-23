@@ -19,10 +19,10 @@ export const Route = createFileRoute("/admin/_gate/seo")({
 function SeoAdmin() {
   const queryClient = useQueryClient();
   const { data } = useQuery(queries.settings);
-  const [form, setForm] = useState<Partial<SiteSettings>>({});
+  const [form, setForm] = useState<Record<string, unknown>>({});
 
   useEffect(() => {
-    if (data) setForm(data);
+    if (data) setForm(data as unknown as Record<string, unknown>);
   }, [data]);
 
   const save = useMutation({

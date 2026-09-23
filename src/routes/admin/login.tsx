@@ -39,10 +39,6 @@ function AdminLogin() {
     supabase.auth.getSession().then(({ data }) => {
       if (data.session) navigate({ to: "/admin/dashboard", replace: true });
     });
-    supabase
-      .rpc("has_any_admin" as never)
-      .then(() => undefined)
-      .catch(() => undefined);
   }, [navigate]);
 
   useEffect(() => {
@@ -58,7 +54,7 @@ function AdminLogin() {
     e.preventDefault();
     const parsed = schema.safeParse({ email, password });
     if (!parsed.success) {
-      toast.error(parsed.error.issues[0].message);
+      toast.error(parsed.error.issues[0]?.message ?? "Invalid details");
       return;
     }
     setLoading(true);

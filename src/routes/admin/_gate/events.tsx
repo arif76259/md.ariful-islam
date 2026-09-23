@@ -17,7 +17,7 @@ function EventsAdmin() {
       defaults={{ ...experienceDefaults, category: "Event" }}
       titleKey="title"
       subtitleKey="organization"
-      filter={(r) => r.category === "Event"}
+      filter={(r) => r["category"] === "Event"}
     />
   );
 }

@@ -83,12 +83,12 @@ function Dashboard() {
               </Link>
             </Button>
             <Button asChild variant="outline" className="justify-start">
-              <Link to="/admin/media">
+              <Link to={"/admin/media" as string}>
                 <UploadCloud className="h-4 w-4" /> Upload photo
               </Link>
             </Button>
             <Button asChild variant="outline" className="justify-start">
-              <Link to="/admin/profile">
+              <Link to={"/admin/profile" as string}>
                 <User className="h-4 w-4" /> Edit profile
               </Link>
             </Button>

@@ -72,7 +72,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             return (
               <Link
                 key={to}
-                to={to}
+                to={to as string}
                 onClick={() => setOpen(false)}
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
                   active
@@ -142,8 +142,8 @@ export function PageHeader({
   action,
 }: {
   title: string;
-  description?: string;
-  action?: React.ReactNode;
+  description?: string | undefined;
+  action?: React.ReactNode | undefined;
 }) {
   return (
     <div className="mb-8 flex flex-wrap items-end justify-between gap-4">

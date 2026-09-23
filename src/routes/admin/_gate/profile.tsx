@@ -31,10 +31,10 @@ const TEXT_FIELDS: Array<[keyof Profile, string, number]> = [
 function ProfileAdmin() {
   const queryClient = useQueryClient();
   const { data } = useQuery(queries.profile);
-  const [form, setForm] = useState<Partial<Profile>>({});
+  const [form, setForm] = useState<Record<string, unknown>>({});
 
   useEffect(() => {
-    if (data) setForm(data);
+    if (data) setForm(data as unknown as Record<string, unknown>);
   }, [data]);
 
   const save = useMutation({

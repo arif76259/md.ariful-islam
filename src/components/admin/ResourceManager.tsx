@@ -57,7 +57,7 @@ export function ResourceManager({
   table: string;
   queryKey: string;
   title: string;
-  description?: string;
+  description?: string | undefined;
   fields: FieldDef[];
   defaults: Record<string, unknown>;
   titleKey: string;
@@ -95,7 +95,7 @@ export function ResourceManager({
         if (error) throw error;
       } else {
         const nextOrder = (data ?? []).reduce(
-          (m, r) => Math.max(m, Number(r.sort_order ?? 0)),
+          (m, r) => Math.max(m, Number(r["sort_order"] ?? 0)),
           0,
         );
         const { error } = await supabase
@@ -132,8 +132,8 @@ export function ResourceManager({
       const index = rows.findIndex((r) => r.id === row.id);
       const other = rows[index + dir];
       if (!other) return;
-      const a = Number(row.sort_order ?? 0);
-      const b = Number(other.sort_order ?? 0);
+      const a = Number(row["sort_order"] ?? 0);
+      const b = Number(other["sort_order"] ?? 0);
       await supabase
         .from(table as never)
         .update({ sort_order: b } as never)
@@ -182,7 +182,7 @@ export function ResourceManager({
     <>
       <PageHeader
         title={title}
-        description={description}
+        {...(description ? { description } : {})}
         action={
           <Button onClick={openNew}>
             <Plus className="h-4 w-4" /> Add entry
@@ -206,7 +206,7 @@ export function ResourceManager({
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
                   <p className="truncate font-medium">{String(row[titleKey] ?? "Untitled")}</p>
-                  {Boolean(row.featured) && (
+                  {Boolean(row["featured"]) && (
                     <Star className="h-3.5 w-3.5 fill-current text-[color:var(--accent)]" />
                   )}
                 </div>
