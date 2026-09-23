@@ -10,33 +10,207 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminGateRouteImport } from './routes/admin/_gate'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminGateAmbassadorsRouteImport } from './routes/admin/_gate/ambassadors'
+import { Route as AdminGateAppearanceRouteImport } from './routes/admin/_gate/appearance'
+import { Route as AdminGateCommunityRouteImport } from './routes/admin/_gate/community'
+import { Route as AdminGateDashboardRouteImport } from './routes/admin/_gate/dashboard'
+import { Route as AdminGateEventsRouteImport } from './routes/admin/_gate/events'
+import { Route as AdminGateExperienceRouteImport } from './routes/admin/_gate/experience'
+import { Route as AdminGateMediaRouteImport } from './routes/admin/_gate/media'
+import { Route as AdminGateProfileRouteImport } from './routes/admin/_gate/profile'
+import { Route as AdminGateProjectsRouteImport } from './routes/admin/_gate/projects'
+import { Route as AdminGateSeoRouteImport } from './routes/admin/_gate/seo'
+import { Route as AdminGateSettingsRouteImport } from './routes/admin/_gate/settings'
+import { Route as AdminGateSkillsRouteImport } from './routes/admin/_gate/skills'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminGateRoute = AdminGateRouteImport.update({
+  id: '/admin/_gate',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminGateAmbassadorsRoute = AdminGateAmbassadorsRouteImport.update({
+  id: '/ambassadors',
+  path: '/ambassadors',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateAppearanceRoute = AdminGateAppearanceRouteImport.update({
+  id: '/appearance',
+  path: '/appearance',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateCommunityRoute = AdminGateCommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateDashboardRoute = AdminGateDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateEventsRoute = AdminGateEventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateExperienceRoute = AdminGateExperienceRouteImport.update({
+  id: '/experience',
+  path: '/experience',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateMediaRoute = AdminGateMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateProfileRoute = AdminGateProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateProjectsRoute = AdminGateProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateSeoRoute = AdminGateSeoRouteImport.update({
+  id: '/seo',
+  path: '/seo',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateSettingsRoute = AdminGateSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateSkillsRoute = AdminGateSkillsRouteImport.update({
+  id: '/skills',
+  path: '/skills',
+  getParentRoute: () => AdminGateRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminGateRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/ambassadors': typeof AdminGateAmbassadorsRoute
+  '/admin/appearance': typeof AdminGateAppearanceRoute
+  '/admin/community': typeof AdminGateCommunityRoute
+  '/admin/dashboard': typeof AdminGateDashboardRoute
+  '/admin/events': typeof AdminGateEventsRoute
+  '/admin/experience': typeof AdminGateExperienceRoute
+  '/admin/media': typeof AdminGateMediaRoute
+  '/admin/profile': typeof AdminGateProfileRoute
+  '/admin/projects': typeof AdminGateProjectsRoute
+  '/admin/seo': typeof AdminGateSeoRoute
+  '/admin/settings': typeof AdminGateSettingsRoute
+  '/admin/skills': typeof AdminGateSkillsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminGateRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/ambassadors': typeof AdminGateAmbassadorsRoute
+  '/admin/appearance': typeof AdminGateAppearanceRoute
+  '/admin/community': typeof AdminGateCommunityRoute
+  '/admin/dashboard': typeof AdminGateDashboardRoute
+  '/admin/events': typeof AdminGateEventsRoute
+  '/admin/experience': typeof AdminGateExperienceRoute
+  '/admin/media': typeof AdminGateMediaRoute
+  '/admin/profile': typeof AdminGateProfileRoute
+  '/admin/projects': typeof AdminGateProjectsRoute
+  '/admin/seo': typeof AdminGateSeoRoute
+  '/admin/settings': typeof AdminGateSettingsRoute
+  '/admin/skills': typeof AdminGateSkillsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin/_gate': typeof AdminGateRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/_gate/ambassadors': typeof AdminGateAmbassadorsRoute
+  '/admin/_gate/appearance': typeof AdminGateAppearanceRoute
+  '/admin/_gate/community': typeof AdminGateCommunityRoute
+  '/admin/_gate/dashboard': typeof AdminGateDashboardRoute
+  '/admin/_gate/events': typeof AdminGateEventsRoute
+  '/admin/_gate/experience': typeof AdminGateExperienceRoute
+  '/admin/_gate/media': typeof AdminGateMediaRoute
+  '/admin/_gate/profile': typeof AdminGateProfileRoute
+  '/admin/_gate/projects': typeof AdminGateProjectsRoute
+  '/admin/_gate/seo': typeof AdminGateSeoRoute
+  '/admin/_gate/settings': typeof AdminGateSettingsRoute
+  '/admin/_gate/skills': typeof AdminGateSkillsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/admin/login'
+    | '/admin/ambassadors'
+    | '/admin/appearance'
+    | '/admin/community'
+    | '/admin/dashboard'
+    | '/admin/events'
+    | '/admin/experience'
+    | '/admin/media'
+    | '/admin/profile'
+    | '/admin/projects'
+    | '/admin/seo'
+    | '/admin/settings'
+    | '/admin/skills'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/admin'
+    | '/admin/login'
+    | '/admin/ambassadors'
+    | '/admin/appearance'
+    | '/admin/community'
+    | '/admin/dashboard'
+    | '/admin/events'
+    | '/admin/experience'
+    | '/admin/media'
+    | '/admin/profile'
+    | '/admin/projects'
+    | '/admin/seo'
+    | '/admin/settings'
+    | '/admin/skills'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin/_gate'
+    | '/admin/login'
+    | '/admin/_gate/ambassadors'
+    | '/admin/_gate/appearance'
+    | '/admin/_gate/community'
+    | '/admin/_gate/dashboard'
+    | '/admin/_gate/events'
+    | '/admin/_gate/experience'
+    | '/admin/_gate/media'
+    | '/admin/_gate/profile'
+    | '/admin/_gate/projects'
+    | '/admin/_gate/seo'
+    | '/admin/_gate/settings'
+    | '/admin/_gate/skills'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminGateRoute: typeof AdminGateRouteWithChildren
+  AdminLoginRoute: typeof AdminLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +222,145 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/_gate': {
+      id: '/admin/_gate'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminGateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/_gate/ambassadors': {
+      id: '/admin/_gate/ambassadors'
+      path: '/ambassadors'
+      fullPath: '/admin/ambassadors'
+      preLoaderRoute: typeof AdminGateAmbassadorsRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/appearance': {
+      id: '/admin/_gate/appearance'
+      path: '/appearance'
+      fullPath: '/admin/appearance'
+      preLoaderRoute: typeof AdminGateAppearanceRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/community': {
+      id: '/admin/_gate/community'
+      path: '/community'
+      fullPath: '/admin/community'
+      preLoaderRoute: typeof AdminGateCommunityRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/dashboard': {
+      id: '/admin/_gate/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminGateDashboardRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/events': {
+      id: '/admin/_gate/events'
+      path: '/events'
+      fullPath: '/admin/events'
+      preLoaderRoute: typeof AdminGateEventsRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/experience': {
+      id: '/admin/_gate/experience'
+      path: '/experience'
+      fullPath: '/admin/experience'
+      preLoaderRoute: typeof AdminGateExperienceRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/media': {
+      id: '/admin/_gate/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AdminGateMediaRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/profile': {
+      id: '/admin/_gate/profile'
+      path: '/profile'
+      fullPath: '/admin/profile'
+      preLoaderRoute: typeof AdminGateProfileRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/projects': {
+      id: '/admin/_gate/projects'
+      path: '/projects'
+      fullPath: '/admin/projects'
+      preLoaderRoute: typeof AdminGateProjectsRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/seo': {
+      id: '/admin/_gate/seo'
+      path: '/seo'
+      fullPath: '/admin/seo'
+      preLoaderRoute: typeof AdminGateSeoRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/settings': {
+      id: '/admin/_gate/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminGateSettingsRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/skills': {
+      id: '/admin/_gate/skills'
+      path: '/skills'
+      fullPath: '/admin/skills'
+      preLoaderRoute: typeof AdminGateSkillsRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
   }
 }
 
+interface AdminGateRouteChildren {
+  AdminGateAmbassadorsRoute: typeof AdminGateAmbassadorsRoute
+  AdminGateAppearanceRoute: typeof AdminGateAppearanceRoute
+  AdminGateCommunityRoute: typeof AdminGateCommunityRoute
+  AdminGateDashboardRoute: typeof AdminGateDashboardRoute
+  AdminGateEventsRoute: typeof AdminGateEventsRoute
+  AdminGateExperienceRoute: typeof AdminGateExperienceRoute
+  AdminGateMediaRoute: typeof AdminGateMediaRoute
+  AdminGateProfileRoute: typeof AdminGateProfileRoute
+  AdminGateProjectsRoute: typeof AdminGateProjectsRoute
+  AdminGateSeoRoute: typeof AdminGateSeoRoute
+  AdminGateSettingsRoute: typeof AdminGateSettingsRoute
+  AdminGateSkillsRoute: typeof AdminGateSkillsRoute
+}
+
+const AdminGateRouteChildren: AdminGateRouteChildren = {
+  AdminGateAmbassadorsRoute: AdminGateAmbassadorsRoute,
+  AdminGateAppearanceRoute: AdminGateAppearanceRoute,
+  AdminGateCommunityRoute: AdminGateCommunityRoute,
+  AdminGateDashboardRoute: AdminGateDashboardRoute,
+  AdminGateEventsRoute: AdminGateEventsRoute,
+  AdminGateExperienceRoute: AdminGateExperienceRoute,
+  AdminGateMediaRoute: AdminGateMediaRoute,
+  AdminGateProfileRoute: AdminGateProfileRoute,
+  AdminGateProjectsRoute: AdminGateProjectsRoute,
+  AdminGateSeoRoute: AdminGateSeoRoute,
+  AdminGateSettingsRoute: AdminGateSettingsRoute,
+  AdminGateSkillsRoute: AdminGateSkillsRoute,
+}
+
+const AdminGateRouteWithChildren = AdminGateRoute._addFileChildren(
+  AdminGateRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminGateRoute: AdminGateRouteWithChildren,
+  AdminLoginRoute: AdminLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

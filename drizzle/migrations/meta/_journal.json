@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1790166781575,
+      "tag": "0000_portfolio_cms_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790166827033,
+      "tag": "0001_media_storage_policies",
+      "breakpoints": true
+    }
+  ]
+}
