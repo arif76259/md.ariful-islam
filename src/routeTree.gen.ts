@@ -12,6 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminGateRouteImport } from './routes/admin/_gate'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminGateAmbassadorsRouteImport } from './routes/admin/_gate/ambassadors'
+import { Route as AdminGateCommunityRouteImport } from './routes/admin/_gate/community'
+import { Route as AdminGateDashboardRouteImport } from './routes/admin/_gate/dashboard'
+import { Route as AdminGateEventsRouteImport } from './routes/admin/_gate/events'
+import { Route as AdminGateExperienceRouteImport } from './routes/admin/_gate/experience'
+import { Route as AdminGateProjectsRouteImport } from './routes/admin/_gate/projects'
+import { Route as AdminGateSkillsRouteImport } from './routes/admin/_gate/skills'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,34 +35,121 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   path: '/admin/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminGateAmbassadorsRoute = AdminGateAmbassadorsRouteImport.update({
+  id: '/ambassadors',
+  path: '/ambassadors',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateCommunityRoute = AdminGateCommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateDashboardRoute = AdminGateDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateEventsRoute = AdminGateEventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateExperienceRoute = AdminGateExperienceRouteImport.update({
+  id: '/experience',
+  path: '/experience',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateProjectsRoute = AdminGateProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateSkillsRoute = AdminGateSkillsRouteImport.update({
+  id: '/skills',
+  path: '/skills',
+  getParentRoute: () => AdminGateRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminGateRoute
+  '/admin': typeof AdminGateRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/admin/ambassadors': typeof AdminGateAmbassadorsRoute
+  '/admin/community': typeof AdminGateCommunityRoute
+  '/admin/dashboard': typeof AdminGateDashboardRoute
+  '/admin/events': typeof AdminGateEventsRoute
+  '/admin/experience': typeof AdminGateExperienceRoute
+  '/admin/projects': typeof AdminGateProjectsRoute
+  '/admin/skills': typeof AdminGateSkillsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminGateRoute
+  '/admin': typeof AdminGateRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/admin/ambassadors': typeof AdminGateAmbassadorsRoute
+  '/admin/community': typeof AdminGateCommunityRoute
+  '/admin/dashboard': typeof AdminGateDashboardRoute
+  '/admin/events': typeof AdminGateEventsRoute
+  '/admin/experience': typeof AdminGateExperienceRoute
+  '/admin/projects': typeof AdminGateProjectsRoute
+  '/admin/skills': typeof AdminGateSkillsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin/_gate': typeof AdminGateRoute
+  '/admin/_gate': typeof AdminGateRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/admin/_gate/ambassadors': typeof AdminGateAmbassadorsRoute
+  '/admin/_gate/community': typeof AdminGateCommunityRoute
+  '/admin/_gate/dashboard': typeof AdminGateDashboardRoute
+  '/admin/_gate/events': typeof AdminGateEventsRoute
+  '/admin/_gate/experience': typeof AdminGateExperienceRoute
+  '/admin/_gate/projects': typeof AdminGateProjectsRoute
+  '/admin/_gate/skills': typeof AdminGateSkillsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/admin/login'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/admin/login'
+    | '/admin/ambassadors'
+    | '/admin/community'
+    | '/admin/dashboard'
+    | '/admin/events'
+    | '/admin/experience'
+    | '/admin/projects'
+    | '/admin/skills'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/admin/login'
-  id: '__root__' | '/' | '/admin/_gate' | '/admin/login'
+  to:
+    | '/'
+    | '/admin'
+    | '/admin/login'
+    | '/admin/ambassadors'
+    | '/admin/community'
+    | '/admin/dashboard'
+    | '/admin/events'
+    | '/admin/experience'
+    | '/admin/projects'
+    | '/admin/skills'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin/_gate'
+    | '/admin/login'
+    | '/admin/_gate/ambassadors'
+    | '/admin/_gate/community'
+    | '/admin/_gate/dashboard'
+    | '/admin/_gate/events'
+    | '/admin/_gate/experience'
+    | '/admin/_gate/projects'
+    | '/admin/_gate/skills'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminGateRoute: typeof AdminGateRoute
+  AdminGateRoute: typeof AdminGateRouteWithChildren
   AdminLoginRoute: typeof AdminLoginRoute
 }
 
@@ -82,12 +176,85 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/_gate/ambassadors': {
+      id: '/admin/_gate/ambassadors'
+      path: '/ambassadors'
+      fullPath: '/admin/ambassadors'
+      preLoaderRoute: typeof AdminGateAmbassadorsRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/community': {
+      id: '/admin/_gate/community'
+      path: '/community'
+      fullPath: '/admin/community'
+      preLoaderRoute: typeof AdminGateCommunityRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/dashboard': {
+      id: '/admin/_gate/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminGateDashboardRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/events': {
+      id: '/admin/_gate/events'
+      path: '/events'
+      fullPath: '/admin/events'
+      preLoaderRoute: typeof AdminGateEventsRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/experience': {
+      id: '/admin/_gate/experience'
+      path: '/experience'
+      fullPath: '/admin/experience'
+      preLoaderRoute: typeof AdminGateExperienceRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/projects': {
+      id: '/admin/_gate/projects'
+      path: '/projects'
+      fullPath: '/admin/projects'
+      preLoaderRoute: typeof AdminGateProjectsRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/skills': {
+      id: '/admin/_gate/skills'
+      path: '/skills'
+      fullPath: '/admin/skills'
+      preLoaderRoute: typeof AdminGateSkillsRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
   }
 }
 
+interface AdminGateRouteChildren {
+  AdminGateAmbassadorsRoute: typeof AdminGateAmbassadorsRoute
+  AdminGateCommunityRoute: typeof AdminGateCommunityRoute
+  AdminGateDashboardRoute: typeof AdminGateDashboardRoute
+  AdminGateEventsRoute: typeof AdminGateEventsRoute
+  AdminGateExperienceRoute: typeof AdminGateExperienceRoute
+  AdminGateProjectsRoute: typeof AdminGateProjectsRoute
+  AdminGateSkillsRoute: typeof AdminGateSkillsRoute
+}
+
+const AdminGateRouteChildren: AdminGateRouteChildren = {
+  AdminGateAmbassadorsRoute: AdminGateAmbassadorsRoute,
+  AdminGateCommunityRoute: AdminGateCommunityRoute,
+  AdminGateDashboardRoute: AdminGateDashboardRoute,
+  AdminGateEventsRoute: AdminGateEventsRoute,
+  AdminGateExperienceRoute: AdminGateExperienceRoute,
+  AdminGateProjectsRoute: AdminGateProjectsRoute,
+  AdminGateSkillsRoute: AdminGateSkillsRoute,
+}
+
+const AdminGateRouteWithChildren = AdminGateRoute._addFileChildren(
+  AdminGateRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminGateRoute: AdminGateRoute,
+  AdminGateRoute: AdminGateRouteWithChildren,
   AdminLoginRoute: AdminLoginRoute,
 }
 export const routeTree = rootRouteImport
