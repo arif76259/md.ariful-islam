@@ -13,11 +13,16 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminGateRouteImport } from './routes/admin/_gate'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminGateAmbassadorsRouteImport } from './routes/admin/_gate/ambassadors'
+import { Route as AdminGateAppearanceRouteImport } from './routes/admin/_gate/appearance'
 import { Route as AdminGateCommunityRouteImport } from './routes/admin/_gate/community'
 import { Route as AdminGateDashboardRouteImport } from './routes/admin/_gate/dashboard'
 import { Route as AdminGateEventsRouteImport } from './routes/admin/_gate/events'
 import { Route as AdminGateExperienceRouteImport } from './routes/admin/_gate/experience'
+import { Route as AdminGateMediaRouteImport } from './routes/admin/_gate/media'
+import { Route as AdminGateProfileRouteImport } from './routes/admin/_gate/profile'
 import { Route as AdminGateProjectsRouteImport } from './routes/admin/_gate/projects'
+import { Route as AdminGateSeoRouteImport } from './routes/admin/_gate/seo'
+import { Route as AdminGateSettingsRouteImport } from './routes/admin/_gate/settings'
 import { Route as AdminGateSkillsRouteImport } from './routes/admin/_gate/skills'
 
 const IndexRoute = IndexRouteImport.update({
@@ -40,6 +45,11 @@ const AdminGateAmbassadorsRoute = AdminGateAmbassadorsRouteImport.update({
   path: '/ambassadors',
   getParentRoute: () => AdminGateRoute,
 } as any)
+const AdminGateAppearanceRoute = AdminGateAppearanceRouteImport.update({
+  id: '/appearance',
+  path: '/appearance',
+  getParentRoute: () => AdminGateRoute,
+} as any)
 const AdminGateCommunityRoute = AdminGateCommunityRouteImport.update({
   id: '/community',
   path: '/community',
@@ -60,9 +70,29 @@ const AdminGateExperienceRoute = AdminGateExperienceRouteImport.update({
   path: '/experience',
   getParentRoute: () => AdminGateRoute,
 } as any)
+const AdminGateMediaRoute = AdminGateMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateProfileRoute = AdminGateProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AdminGateRoute,
+} as any)
 const AdminGateProjectsRoute = AdminGateProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateSeoRoute = AdminGateSeoRouteImport.update({
+  id: '/seo',
+  path: '/seo',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateSettingsRoute = AdminGateSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AdminGateRoute,
 } as any)
 const AdminGateSkillsRoute = AdminGateSkillsRouteImport.update({
@@ -76,11 +106,16 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminGateRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
   '/admin/ambassadors': typeof AdminGateAmbassadorsRoute
+  '/admin/appearance': typeof AdminGateAppearanceRoute
   '/admin/community': typeof AdminGateCommunityRoute
   '/admin/dashboard': typeof AdminGateDashboardRoute
   '/admin/events': typeof AdminGateEventsRoute
   '/admin/experience': typeof AdminGateExperienceRoute
+  '/admin/media': typeof AdminGateMediaRoute
+  '/admin/profile': typeof AdminGateProfileRoute
   '/admin/projects': typeof AdminGateProjectsRoute
+  '/admin/seo': typeof AdminGateSeoRoute
+  '/admin/settings': typeof AdminGateSettingsRoute
   '/admin/skills': typeof AdminGateSkillsRoute
 }
 export interface FileRoutesByTo {
@@ -88,11 +123,16 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminGateRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
   '/admin/ambassadors': typeof AdminGateAmbassadorsRoute
+  '/admin/appearance': typeof AdminGateAppearanceRoute
   '/admin/community': typeof AdminGateCommunityRoute
   '/admin/dashboard': typeof AdminGateDashboardRoute
   '/admin/events': typeof AdminGateEventsRoute
   '/admin/experience': typeof AdminGateExperienceRoute
+  '/admin/media': typeof AdminGateMediaRoute
+  '/admin/profile': typeof AdminGateProfileRoute
   '/admin/projects': typeof AdminGateProjectsRoute
+  '/admin/seo': typeof AdminGateSeoRoute
+  '/admin/settings': typeof AdminGateSettingsRoute
   '/admin/skills': typeof AdminGateSkillsRoute
 }
 export interface FileRoutesById {
@@ -101,11 +141,16 @@ export interface FileRoutesById {
   '/admin/_gate': typeof AdminGateRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
   '/admin/_gate/ambassadors': typeof AdminGateAmbassadorsRoute
+  '/admin/_gate/appearance': typeof AdminGateAppearanceRoute
   '/admin/_gate/community': typeof AdminGateCommunityRoute
   '/admin/_gate/dashboard': typeof AdminGateDashboardRoute
   '/admin/_gate/events': typeof AdminGateEventsRoute
   '/admin/_gate/experience': typeof AdminGateExperienceRoute
+  '/admin/_gate/media': typeof AdminGateMediaRoute
+  '/admin/_gate/profile': typeof AdminGateProfileRoute
   '/admin/_gate/projects': typeof AdminGateProjectsRoute
+  '/admin/_gate/seo': typeof AdminGateSeoRoute
+  '/admin/_gate/settings': typeof AdminGateSettingsRoute
   '/admin/_gate/skills': typeof AdminGateSkillsRoute
 }
 export interface FileRouteTypes {
@@ -115,11 +160,16 @@ export interface FileRouteTypes {
     | '/admin'
     | '/admin/login'
     | '/admin/ambassadors'
+    | '/admin/appearance'
     | '/admin/community'
     | '/admin/dashboard'
     | '/admin/events'
     | '/admin/experience'
+    | '/admin/media'
+    | '/admin/profile'
     | '/admin/projects'
+    | '/admin/seo'
+    | '/admin/settings'
     | '/admin/skills'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -127,11 +177,16 @@ export interface FileRouteTypes {
     | '/admin'
     | '/admin/login'
     | '/admin/ambassadors'
+    | '/admin/appearance'
     | '/admin/community'
     | '/admin/dashboard'
     | '/admin/events'
     | '/admin/experience'
+    | '/admin/media'
+    | '/admin/profile'
     | '/admin/projects'
+    | '/admin/seo'
+    | '/admin/settings'
     | '/admin/skills'
   id:
     | '__root__'
@@ -139,11 +194,16 @@ export interface FileRouteTypes {
     | '/admin/_gate'
     | '/admin/login'
     | '/admin/_gate/ambassadors'
+    | '/admin/_gate/appearance'
     | '/admin/_gate/community'
     | '/admin/_gate/dashboard'
     | '/admin/_gate/events'
     | '/admin/_gate/experience'
+    | '/admin/_gate/media'
+    | '/admin/_gate/profile'
     | '/admin/_gate/projects'
+    | '/admin/_gate/seo'
+    | '/admin/_gate/settings'
     | '/admin/_gate/skills'
   fileRoutesById: FileRoutesById
 }
@@ -183,6 +243,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminGateAmbassadorsRouteImport
       parentRoute: typeof AdminGateRoute
     }
+    '/admin/_gate/appearance': {
+      id: '/admin/_gate/appearance'
+      path: '/appearance'
+      fullPath: '/admin/appearance'
+      preLoaderRoute: typeof AdminGateAppearanceRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
     '/admin/_gate/community': {
       id: '/admin/_gate/community'
       path: '/community'
@@ -211,11 +278,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminGateExperienceRouteImport
       parentRoute: typeof AdminGateRoute
     }
+    '/admin/_gate/media': {
+      id: '/admin/_gate/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AdminGateMediaRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/profile': {
+      id: '/admin/_gate/profile'
+      path: '/profile'
+      fullPath: '/admin/profile'
+      preLoaderRoute: typeof AdminGateProfileRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
     '/admin/_gate/projects': {
       id: '/admin/_gate/projects'
       path: '/projects'
       fullPath: '/admin/projects'
       preLoaderRoute: typeof AdminGateProjectsRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/seo': {
+      id: '/admin/_gate/seo'
+      path: '/seo'
+      fullPath: '/admin/seo'
+      preLoaderRoute: typeof AdminGateSeoRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/settings': {
+      id: '/admin/_gate/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminGateSettingsRouteImport
       parentRoute: typeof AdminGateRoute
     }
     '/admin/_gate/skills': {
@@ -230,21 +325,31 @@ declare module '@tanstack/react-router' {
 
 interface AdminGateRouteChildren {
   AdminGateAmbassadorsRoute: typeof AdminGateAmbassadorsRoute
+  AdminGateAppearanceRoute: typeof AdminGateAppearanceRoute
   AdminGateCommunityRoute: typeof AdminGateCommunityRoute
   AdminGateDashboardRoute: typeof AdminGateDashboardRoute
   AdminGateEventsRoute: typeof AdminGateEventsRoute
   AdminGateExperienceRoute: typeof AdminGateExperienceRoute
+  AdminGateMediaRoute: typeof AdminGateMediaRoute
+  AdminGateProfileRoute: typeof AdminGateProfileRoute
   AdminGateProjectsRoute: typeof AdminGateProjectsRoute
+  AdminGateSeoRoute: typeof AdminGateSeoRoute
+  AdminGateSettingsRoute: typeof AdminGateSettingsRoute
   AdminGateSkillsRoute: typeof AdminGateSkillsRoute
 }
 
 const AdminGateRouteChildren: AdminGateRouteChildren = {
   AdminGateAmbassadorsRoute: AdminGateAmbassadorsRoute,
+  AdminGateAppearanceRoute: AdminGateAppearanceRoute,
   AdminGateCommunityRoute: AdminGateCommunityRoute,
   AdminGateDashboardRoute: AdminGateDashboardRoute,
   AdminGateEventsRoute: AdminGateEventsRoute,
   AdminGateExperienceRoute: AdminGateExperienceRoute,
+  AdminGateMediaRoute: AdminGateMediaRoute,
+  AdminGateProfileRoute: AdminGateProfileRoute,
   AdminGateProjectsRoute: AdminGateProjectsRoute,
+  AdminGateSeoRoute: AdminGateSeoRoute,
+  AdminGateSettingsRoute: AdminGateSettingsRoute,
   AdminGateSkillsRoute: AdminGateSkillsRoute,
 }
 
