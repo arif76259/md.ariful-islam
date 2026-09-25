@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminGateRouteImport } from './routes/admin/_gate'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminGateAmbassadorsRouteImport } from './routes/admin/_gate/ambassadors'
+import { Route as AdminGateAnalyticsRouteImport } from './routes/admin/_gate/analytics'
 import { Route as AdminGateAppearanceRouteImport } from './routes/admin/_gate/appearance'
 import { Route as AdminGateCommunityRouteImport } from './routes/admin/_gate/community'
 import { Route as AdminGateDashboardRouteImport } from './routes/admin/_gate/dashboard'
@@ -43,6 +44,11 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
 const AdminGateAmbassadorsRoute = AdminGateAmbassadorsRouteImport.update({
   id: '/ambassadors',
   path: '/ambassadors',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateAnalyticsRoute = AdminGateAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
   getParentRoute: () => AdminGateRoute,
 } as any)
 const AdminGateAppearanceRoute = AdminGateAppearanceRouteImport.update({
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminGateRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
   '/admin/ambassadors': typeof AdminGateAmbassadorsRoute
+  '/admin/analytics': typeof AdminGateAnalyticsRoute
   '/admin/appearance': typeof AdminGateAppearanceRoute
   '/admin/community': typeof AdminGateCommunityRoute
   '/admin/dashboard': typeof AdminGateDashboardRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminGateRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
   '/admin/ambassadors': typeof AdminGateAmbassadorsRoute
+  '/admin/analytics': typeof AdminGateAnalyticsRoute
   '/admin/appearance': typeof AdminGateAppearanceRoute
   '/admin/community': typeof AdminGateCommunityRoute
   '/admin/dashboard': typeof AdminGateDashboardRoute
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/admin/_gate': typeof AdminGateRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
   '/admin/_gate/ambassadors': typeof AdminGateAmbassadorsRoute
+  '/admin/_gate/analytics': typeof AdminGateAnalyticsRoute
   '/admin/_gate/appearance': typeof AdminGateAppearanceRoute
   '/admin/_gate/community': typeof AdminGateCommunityRoute
   '/admin/_gate/dashboard': typeof AdminGateDashboardRoute
@@ -160,6 +169,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/admin/login'
     | '/admin/ambassadors'
+    | '/admin/analytics'
     | '/admin/appearance'
     | '/admin/community'
     | '/admin/dashboard'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/admin/login'
     | '/admin/ambassadors'
+    | '/admin/analytics'
     | '/admin/appearance'
     | '/admin/community'
     | '/admin/dashboard'
@@ -194,6 +205,7 @@ export interface FileRouteTypes {
     | '/admin/_gate'
     | '/admin/login'
     | '/admin/_gate/ambassadors'
+    | '/admin/_gate/analytics'
     | '/admin/_gate/appearance'
     | '/admin/_gate/community'
     | '/admin/_gate/dashboard'
@@ -241,6 +253,13 @@ declare module '@tanstack/react-router' {
       path: '/ambassadors'
       fullPath: '/admin/ambassadors'
       preLoaderRoute: typeof AdminGateAmbassadorsRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/analytics': {
+      id: '/admin/_gate/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminGateAnalyticsRouteImport
       parentRoute: typeof AdminGateRoute
     }
     '/admin/_gate/appearance': {
@@ -325,6 +344,7 @@ declare module '@tanstack/react-router' {
 
 interface AdminGateRouteChildren {
   AdminGateAmbassadorsRoute: typeof AdminGateAmbassadorsRoute
+  AdminGateAnalyticsRoute: typeof AdminGateAnalyticsRoute
   AdminGateAppearanceRoute: typeof AdminGateAppearanceRoute
   AdminGateCommunityRoute: typeof AdminGateCommunityRoute
   AdminGateDashboardRoute: typeof AdminGateDashboardRoute
@@ -340,6 +360,7 @@ interface AdminGateRouteChildren {
 
 const AdminGateRouteChildren: AdminGateRouteChildren = {
   AdminGateAmbassadorsRoute: AdminGateAmbassadorsRoute,
+  AdminGateAnalyticsRoute: AdminGateAnalyticsRoute,
   AdminGateAppearanceRoute: AdminGateAppearanceRoute,
   AdminGateCommunityRoute: AdminGateCommunityRoute,
   AdminGateDashboardRoute: AdminGateDashboardRoute,
