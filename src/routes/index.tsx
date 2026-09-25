@@ -75,7 +75,13 @@ function Index() {
           {seo.og_image && <meta property="og:image" content={seo.og_image} />}
         </>
       )}
-      <SiteNav name={p.name} role={p.headline.split("•")[0]?.trim() || "Portfolio"} />
+      <SiteNav
+        name={p.name}
+        role={p.headline.split("•")[0]?.trim() || "Portfolio"}
+        logoUrl={p.logo_url}
+        monogram={p.monogram}
+      />
+
       <main>
         <Hero profile={p} />
         <About profile={p} />

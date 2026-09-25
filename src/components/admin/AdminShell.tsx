@@ -58,14 +58,23 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         }`}
       >
         <div className="flex h-16 items-center gap-3 border-b border-border px-5">
-          <span className="grid h-8 w-8 place-items-center rounded-lg border border-border font-display text-xs font-bold text-[color:var(--accent)]">
-            AI
-          </span>
+          {profile?.logo_url ? (
+            <img
+              src={profile.logo_url}
+              alt="Logo"
+              className="h-8 w-8 rounded-lg border border-border object-contain"
+            />
+          ) : (
+            <span className="grid h-8 w-8 place-items-center rounded-lg border border-border font-display text-xs font-bold text-[color:var(--accent)]">
+              {badge}
+            </span>
+          )}
           <div className="leading-tight">
             <p className="font-display text-sm font-bold">Console</p>
             <p className="label-mono text-muted-foreground">Portfolio CMS</p>
           </div>
         </div>
+
         <nav className="flex flex-col gap-1 p-3">
           {NAV.map(({ to, label, icon: Icon }) => {
             const active = pathname === to;
