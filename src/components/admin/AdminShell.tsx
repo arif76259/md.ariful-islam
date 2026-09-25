@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { queries } from "@/lib/cms";
 
 import {
+  BarChart3,
   Bell,
   Briefcase,
   CalendarDays,
@@ -26,6 +27,7 @@ import { Button } from "@/components/ui/button";
 
 const NAV = [
   { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { to: "/admin/profile", label: "Profile", icon: User },
   { to: "/admin/experience", label: "Experience", icon: Briefcase },
   { to: "/admin/events", label: "Events", icon: CalendarDays },
