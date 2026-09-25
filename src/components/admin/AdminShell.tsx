@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { queries } from "@/lib/cms";
+
 import {
   Bell,
   Briefcase,
@@ -42,6 +44,17 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const queryClient = useQueryClient();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [open, setOpen] = useState(false);
+  const { data: profile } = useQuery(queries.profile);
+  const badge =
+    (profile?.monogram ?? "").trim() ||
+    (profile?.name ?? "")
+      .split(" ")
+      .filter(Boolean)
+      .slice(-2)
+      .map((w) => w[0])
+      .join("") ||
+    "MA";
+
 
   async function signOut() {
     await queryClient.cancelQueries();
