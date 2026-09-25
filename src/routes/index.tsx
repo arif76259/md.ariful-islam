@@ -96,6 +96,7 @@ function Index() {
         <ContactSection profile={p} social={social.data ?? []} />
       </main>
       <SiteFooter profile={p} />
+      <PageviewTracker />
     </>
   );
 }
