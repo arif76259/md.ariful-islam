@@ -13,7 +13,17 @@ const LINKS = [
   ["Contact", "#contact"],
 ] as const;
 
-export function SiteNav({ name, role }: { name: string; role: string }) {
+export function SiteNav({
+  name,
+  role,
+  logoUrl,
+  monogram,
+}: {
+  name: string;
+  role: string;
+  logoUrl?: string | null;
+  monogram?: string | null;
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -24,12 +34,14 @@ export function SiteNav({ name, role }: { name: string; role: string }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const initials = name
-    .split(" ")
-    .filter(Boolean)
-    .slice(-2)
-    .map((w) => w[0])
-    .join("");
+  const initials =
+    (monogram ?? "").trim() ||
+    name
+      .split(" ")
+      .filter(Boolean)
+      .slice(-2)
+      .map((w) => w[0])
+      .join("");
 
   return (
     <header
@@ -41,14 +53,23 @@ export function SiteNav({ name, role }: { name: string; role: string }) {
     >
       <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-4 px-6 lg:px-12">
         <a href="#home" className="flex items-center gap-3">
-          <span className="grid h-9 w-9 place-items-center rounded-lg border border-border bg-surface-2 font-display text-sm font-bold text-[color:var(--accent)]">
-            {initials || "AI"}
-          </span>
+          {logoUrl ? (
+            <img
+              src={logoUrl}
+              alt={name}
+              className="h-9 w-9 rounded-lg border border-border object-contain"
+            />
+          ) : (
+            <span className="grid h-9 w-9 place-items-center rounded-lg border border-border bg-surface-2 font-display text-sm font-bold text-[color:var(--accent)]">
+              {initials || "MA"}
+            </span>
+          )}
           <span className="flex flex-col leading-tight">
             <span className="font-display text-base font-bold tracking-tight">{name}</span>
             <span className="label-mono text-muted-foreground">{role}</span>
           </span>
         </a>
+
 
         <nav className="hidden items-center gap-7 xl:flex">
           {LINKS.map(([label, href]) => (

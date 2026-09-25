@@ -212,6 +212,8 @@ export type Database = {
           id: string
           linkedin: string
           location: string
+          logo_url: string | null
+          monogram: string
           name: string
           phone: string
           photo_url: string | null
@@ -230,6 +232,8 @@ export type Database = {
           id?: string
           linkedin?: string
           location?: string
+          logo_url?: string | null
+          monogram?: string
           name?: string
           phone?: string
           photo_url?: string | null
@@ -248,6 +252,8 @@ export type Database = {
           id?: string
           linkedin?: string
           location?: string
+          logo_url?: string | null
+          monogram?: string
           name?: string
           phone?: string
           photo_url?: string | null
