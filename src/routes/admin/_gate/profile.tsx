@@ -92,6 +92,22 @@ function ProfileAdmin() {
             value={form.photo_url ?? null}
             onChange={(v) => set("photo_url", v)}
           />
+          <ImageField
+            label="Site logo (shown in the header instead of initials)"
+            aspect="aspect-square"
+            value={form.logo_url ?? null}
+            onChange={(v) => set("logo_url", v)}
+          />
+          <div className="space-y-2">
+            <Label>Custom initials (used when no logo is uploaded)</Label>
+            <Input
+              maxLength={4}
+              placeholder="e.g. MAI"
+              value={form.monogram ?? ""}
+              onChange={(e) => set("monogram", e.target.value)}
+            />
+          </div>
+
           {TEXT_FIELDS.map(([key, label, max]) => (
             <div key={String(key)} className="space-y-2">
               <Label>{label}</Label>
