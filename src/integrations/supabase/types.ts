@@ -200,6 +200,30 @@ export type Database = {
         }
         Relationships: []
       }
+      pageviews: {
+        Row: {
+          created_at: string
+          id: string
+          path: string
+          referrer: string
+          user_agent: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          path?: string
+          referrer?: string
+          user_agent?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          path?: string
+          referrer?: string
+          user_agent?: string
+        }
+        Relationships: []
+      }
       profile: {
         Row: {
           bio: string
