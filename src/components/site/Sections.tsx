@@ -550,7 +550,7 @@ export function ContactSection({
   return (
     <Section id="contact" className="atmos">
       <Reveal>
-        <SectionLabel index="09">Contact</SectionLabel>
+        <SectionLabel index="10">Contact</SectionLabel>
         <h2 className="font-display mt-6 max-w-4xl text-[clamp(2.2rem,6vw,4.5rem)] leading-[1.02] font-bold">
           Let&apos;s build something <span className="text-gradient">worth organizing</span>.
         </h2>

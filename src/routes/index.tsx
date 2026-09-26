@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { queries } from "@/lib/cms";
 import { SiteNav } from "@/components/site/SiteNav";
 import { PageviewTracker } from "@/components/site/PageviewTracker";
+import { RecommendationsSection } from "@/components/site/Recommendations";
 import {
   About,
   AmbassadorSection,
@@ -50,6 +51,7 @@ function Index() {
   const caseSteps = useQuery(queries.caseSteps);
   const social = useQuery(queries.social);
   const settings = useQuery(queries.settings);
+  const recommendations = useQuery(queries.recommendations);
 
   if (!profile.data) {
     return (
@@ -93,6 +95,7 @@ function Index() {
         <ProjectsSection items={projects.data ?? []} />
         <CommunitySection items={community.data ?? []} />
         <SkillsSection items={skills.data ?? []} />
+        <RecommendationsSection items={recommendations.data ?? []} />
         <ContactSection profile={p} social={social.data ?? []} />
       </main>
       <SiteFooter profile={p} />

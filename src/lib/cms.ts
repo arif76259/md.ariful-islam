@@ -11,6 +11,7 @@ export type CaseStep = Tables<"case_steps">;
 export type SocialLink = Tables<"social_links">;
 export type MediaItem = Tables<"media">;
 export type SiteSettings = Tables<"site_settings">;
+export type Recommendation = Tables<"recommendations">;
 
 async function one<T>(table: string) {
   const { data, error } = await supabase.from(table as never).select("*").limit(1);
@@ -38,6 +39,17 @@ export const cms = {
   caseSteps: () => many<CaseStep>("case_steps"),
   social: () => many<SocialLink>("social_links"),
   media: () => many<MediaItem>("media", "created_at"),
+  recommendations: async () => {
+    const { data, error } = await supabase
+      .from("recommendations")
+      .select("*")
+      .eq("status", "approved")
+      .order("featured", { ascending: false })
+      .order("sort_order", { ascending: true })
+      .order("created_at", { ascending: false });
+    if (error) throw error;
+    return (data ?? []) as Recommendation[];
+  },
 };
 
 export const queries = {
@@ -51,6 +63,7 @@ export const queries = {
   caseSteps: { queryKey: ["case_steps"], queryFn: cms.caseSteps },
   social: { queryKey: ["social_links"], queryFn: cms.social },
   media: { queryKey: ["media"], queryFn: cms.media },
+  recommendations: { queryKey: ["recommendations_public"], queryFn: cms.recommendations },
 };
 
 export const THEME_PRESETS: Record<

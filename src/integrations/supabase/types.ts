@@ -344,6 +344,54 @@ export type Database = {
         }
         Relationships: []
       }
+      recommendations: {
+        Row: {
+          author_avatar_url: string | null
+          author_linkedin_url: string | null
+          author_name: string
+          author_organization: string
+          author_title: string
+          created_at: string
+          featured: boolean
+          id: string
+          message: string
+          relationship: string
+          sort_order: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          author_avatar_url?: string | null
+          author_linkedin_url?: string | null
+          author_name: string
+          author_organization?: string
+          author_title?: string
+          created_at?: string
+          featured?: boolean
+          id?: string
+          message: string
+          relationship?: string
+          sort_order?: number
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          author_avatar_url?: string | null
+          author_linkedin_url?: string | null
+          author_name?: string
+          author_organization?: string
+          author_title?: string
+          created_at?: string
+          featured?: boolean
+          id?: string
+          message?: string
+          relationship?: string
+          sort_order?: number
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       site_settings: {
         Row: {
           background_tone: string
