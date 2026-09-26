@@ -22,6 +22,7 @@ import { Route as AdminGateExperienceRouteImport } from './routes/admin/_gate/ex
 import { Route as AdminGateMediaRouteImport } from './routes/admin/_gate/media'
 import { Route as AdminGateProfileRouteImport } from './routes/admin/_gate/profile'
 import { Route as AdminGateProjectsRouteImport } from './routes/admin/_gate/projects'
+import { Route as AdminGateRecommendationsRouteImport } from './routes/admin/_gate/recommendations'
 import { Route as AdminGateSeoRouteImport } from './routes/admin/_gate/seo'
 import { Route as AdminGateSettingsRouteImport } from './routes/admin/_gate/settings'
 import { Route as AdminGateSkillsRouteImport } from './routes/admin/_gate/skills'
@@ -91,6 +92,12 @@ const AdminGateProjectsRoute = AdminGateProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => AdminGateRoute,
 } as any)
+const AdminGateRecommendationsRoute =
+  AdminGateRecommendationsRouteImport.update({
+    id: '/recommendations',
+    path: '/recommendations',
+    getParentRoute: () => AdminGateRoute,
+  } as any)
 const AdminGateSeoRoute = AdminGateSeoRouteImport.update({
   id: '/seo',
   path: '/seo',
@@ -121,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/admin/media': typeof AdminGateMediaRoute
   '/admin/profile': typeof AdminGateProfileRoute
   '/admin/projects': typeof AdminGateProjectsRoute
+  '/admin/recommendations': typeof AdminGateRecommendationsRoute
   '/admin/seo': typeof AdminGateSeoRoute
   '/admin/settings': typeof AdminGateSettingsRoute
   '/admin/skills': typeof AdminGateSkillsRoute
@@ -139,6 +147,7 @@ export interface FileRoutesByTo {
   '/admin/media': typeof AdminGateMediaRoute
   '/admin/profile': typeof AdminGateProfileRoute
   '/admin/projects': typeof AdminGateProjectsRoute
+  '/admin/recommendations': typeof AdminGateRecommendationsRoute
   '/admin/seo': typeof AdminGateSeoRoute
   '/admin/settings': typeof AdminGateSettingsRoute
   '/admin/skills': typeof AdminGateSkillsRoute
@@ -158,6 +167,7 @@ export interface FileRoutesById {
   '/admin/_gate/media': typeof AdminGateMediaRoute
   '/admin/_gate/profile': typeof AdminGateProfileRoute
   '/admin/_gate/projects': typeof AdminGateProjectsRoute
+  '/admin/_gate/recommendations': typeof AdminGateRecommendationsRoute
   '/admin/_gate/seo': typeof AdminGateSeoRoute
   '/admin/_gate/settings': typeof AdminGateSettingsRoute
   '/admin/_gate/skills': typeof AdminGateSkillsRoute
@@ -178,6 +188,7 @@ export interface FileRouteTypes {
     | '/admin/media'
     | '/admin/profile'
     | '/admin/projects'
+    | '/admin/recommendations'
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/skills'
@@ -196,6 +207,7 @@ export interface FileRouteTypes {
     | '/admin/media'
     | '/admin/profile'
     | '/admin/projects'
+    | '/admin/recommendations'
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/skills'
@@ -214,6 +226,7 @@ export interface FileRouteTypes {
     | '/admin/_gate/media'
     | '/admin/_gate/profile'
     | '/admin/_gate/projects'
+    | '/admin/_gate/recommendations'
     | '/admin/_gate/seo'
     | '/admin/_gate/settings'
     | '/admin/_gate/skills'
@@ -318,6 +331,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminGateProjectsRouteImport
       parentRoute: typeof AdminGateRoute
     }
+    '/admin/_gate/recommendations': {
+      id: '/admin/_gate/recommendations'
+      path: '/recommendations'
+      fullPath: '/admin/recommendations'
+      preLoaderRoute: typeof AdminGateRecommendationsRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
     '/admin/_gate/seo': {
       id: '/admin/_gate/seo'
       path: '/seo'
@@ -353,6 +373,7 @@ interface AdminGateRouteChildren {
   AdminGateMediaRoute: typeof AdminGateMediaRoute
   AdminGateProfileRoute: typeof AdminGateProfileRoute
   AdminGateProjectsRoute: typeof AdminGateProjectsRoute
+  AdminGateRecommendationsRoute: typeof AdminGateRecommendationsRoute
   AdminGateSeoRoute: typeof AdminGateSeoRoute
   AdminGateSettingsRoute: typeof AdminGateSettingsRoute
   AdminGateSkillsRoute: typeof AdminGateSkillsRoute
@@ -369,6 +390,7 @@ const AdminGateRouteChildren: AdminGateRouteChildren = {
   AdminGateMediaRoute: AdminGateMediaRoute,
   AdminGateProfileRoute: AdminGateProfileRoute,
   AdminGateProjectsRoute: AdminGateProjectsRoute,
+  AdminGateRecommendationsRoute: AdminGateRecommendationsRoute,
   AdminGateSeoRoute: AdminGateSeoRoute,
   AdminGateSettingsRoute: AdminGateSettingsRoute,
   AdminGateSkillsRoute: AdminGateSkillsRoute,
