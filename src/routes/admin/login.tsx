@@ -31,24 +31,13 @@ function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
-  const [mode, setMode] = useState<"login" | "setup">("login");
   const [loading, setLoading] = useState(false);
-  const [needsSetup, setNeedsSetup] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       if (data.session) navigate({ to: "/admin/dashboard", replace: true });
     });
   }, [navigate]);
-
-  useEffect(() => {
-    // Offer first-time setup when the admin account has not been created yet.
-    supabase
-      .from("user_roles")
-      .select("id")
-      .limit(1)
-      .then(({ data }) => setNeedsSetup((data ?? []).length === 0));
-  }, []);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -59,23 +48,15 @@ function AdminLogin() {
     }
     setLoading(true);
     try {
-      if (mode === "setup") {
-        const { error } = await supabase.auth.signUp({
-          email: parsed.data.email,
-          password: parsed.data.password,
-          options: { emailRedirectTo: `${window.location.origin}/admin/login` },
-        });
-        if (error) throw error;
-      }
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email: parsed.data.email,
         password: parsed.data.password,
       });
       if (signInError) throw signInError;
 
-      const { data: claimed, error: claimError } = await supabase.rpc("claim_admin");
-      if (claimError) throw claimError;
-      if (!claimed) {
+      const { data: isAdmin, error: roleError } = await supabase.rpc("is_admin");
+      if (roleError) throw roleError;
+      if (!isAdmin) {
         await supabase.auth.signOut();
         throw new Error("This account is not authorised for the admin area.");
       }
@@ -88,6 +69,7 @@ function AdminLogin() {
       setLoading(false);
     }
   }
+
 
   return (
     <main className="atmos grid min-h-screen place-items-center px-6 py-16">
