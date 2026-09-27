@@ -104,7 +104,7 @@ function AdminLogin() {
             <Input
               id="password"
               type="password"
-              autoComplete={mode === "setup" ? "new-password" : "current-password"}
+              autoComplete="current-password"
               value={password}
               maxLength={128}
               onChange={(e) => setPassword(e.target.value)}
@@ -124,21 +124,9 @@ function AdminLogin() {
           </div>
           <Button type="submit" className="w-full" disabled={loading}>
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-            {mode === "setup" ? "Create admin account" : "Login"}
+            Login
           </Button>
 
-          {needsSetup && (
-            <p className="text-center text-xs text-muted-foreground">
-              {mode === "login" ? "No admin account yet?" : "Already have an account?"}{" "}
-              <button
-                type="button"
-                className="text-[color:var(--accent)] underline-offset-4 hover:underline"
-                onClick={() => setMode(mode === "login" ? "setup" : "login")}
-              >
-                {mode === "login" ? "Create the first one" : "Sign in instead"}
-              </button>
-            </p>
-          )}
         </form>
 
         <p className="mt-6 text-center text-xs text-muted-foreground">
