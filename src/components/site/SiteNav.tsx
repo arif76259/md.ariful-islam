@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const WORK_LINKS = [
+  ["Work & Roles", "#experience"],
+  ["Organized Events", "#events"],
+  ["Ambassador Roles", "#ambassador"],
+  ["Projects & Concepts", "#projects"],
+] as const;
 
 const LINKS = [
   ["Home", "#home"],
   ["About", "#about"],
-  ["Experience", "#experience"],
-  ["Events", "#events"],
-  ["Ambassador", "#ambassador"],
-  ["Projects", "#projects"],
   ["Skills", "#skills"],
   ["Recommendations", "#recommendations"],
   ["Contact", "#contact"],
@@ -27,6 +30,9 @@ export function SiteNav({
 }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [expOpen, setExpOpen] = useState(false);
+  const [mobileExp, setMobileExp] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -43,6 +49,15 @@ export function SiteNav({
       .slice(-2)
       .map((w) => w[0])
       .join("");
+
+  const openMenu = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setExpOpen(true);
+  };
+  const scheduleClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setExpOpen(false), 140);
+  };
 
   return (
     <header
@@ -71,9 +86,55 @@ export function SiteNav({
           </span>
         </a>
 
+        <nav className="hidden items-center gap-7 lg:flex">
+          <a
+            href="#home"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Home
+          </a>
+          <a
+            href="#about"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            About
+          </a>
 
-        <nav className="hidden items-center gap-7 xl:flex">
-          {LINKS.map(([label, href]) => (
+          <div className="relative" onMouseEnter={openMenu} onMouseLeave={scheduleClose}>
+            <button
+              type="button"
+              aria-expanded={expOpen}
+              onClick={() => setExpOpen((v) => !v)}
+              className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Experience
+              <ChevronDown
+                className={`h-3.5 w-3.5 transition-transform duration-300 ${expOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+            <div
+              className={`absolute top-full left-1/2 w-64 -translate-x-1/2 pt-3 transition-all duration-200 ${
+                expOpen
+                  ? "pointer-events-auto translate-y-0 opacity-100"
+                  : "pointer-events-none -translate-y-1 opacity-0"
+              }`}
+            >
+              <div className="overflow-hidden rounded-2xl border border-border bg-background/90 p-2 shadow-xl backdrop-blur-xl">
+                {WORK_LINKS.map(([label, href]) => (
+                  <a
+                    key={href}
+                    href={href}
+                    onClick={() => setExpOpen(false)}
+                    className="block rounded-xl px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground"
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {LINKS.slice(2).map(([label, href]) => (
             <a
               key={href}
               href={href}
@@ -91,7 +152,7 @@ export function SiteNav({
           <button
             aria-label="Open menu"
             onClick={() => setOpen((v) => !v)}
-            className="grid h-10 w-10 place-items-center rounded-lg border border-border xl:hidden"
+            className="grid h-10 w-10 place-items-center rounded-lg border border-border lg:hidden"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -99,9 +160,45 @@ export function SiteNav({
       </div>
 
       {open && (
-        <div className="border-t border-border bg-background/95 px-6 py-4 backdrop-blur-xl xl:hidden">
+        <div className="border-t border-border bg-background/95 px-6 py-4 backdrop-blur-xl lg:hidden">
           <div className="flex flex-col">
-            {LINKS.map(([label, href]) => (
+            {LINKS.slice(0, 2).map(([label, href]) => (
+              <a
+                key={href}
+                href={href}
+                onClick={() => setOpen(false)}
+                className="border-b border-border/60 py-3 text-sm text-muted-foreground hover:text-foreground"
+              >
+                {label}
+              </a>
+            ))}
+
+            <button
+              type="button"
+              onClick={() => setMobileExp((v) => !v)}
+              className="flex items-center justify-between border-b border-border/60 py-3 text-sm text-muted-foreground hover:text-foreground"
+            >
+              Experience
+              <ChevronDown
+                className={`h-4 w-4 transition-transform duration-300 ${mobileExp ? "rotate-180" : ""}`}
+              />
+            </button>
+            {mobileExp && (
+              <div className="flex flex-col border-b border-border/60 pl-4">
+                {WORK_LINKS.map(([label, href]) => (
+                  <a
+                    key={href}
+                    href={href}
+                    onClick={() => setOpen(false)}
+                    className="py-2.5 text-sm text-muted-foreground hover:text-foreground"
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+            )}
+
+            {LINKS.slice(2).map(([label, href]) => (
               <a
                 key={href}
                 href={href}
