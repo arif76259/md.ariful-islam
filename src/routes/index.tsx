@@ -97,9 +97,10 @@ function Index() {
         <CommunitySection items={community.data ?? []} />
         <SkillsSection items={skills.data ?? []} />
         <RecommendationsSection items={recommendations.data ?? []} />
-        <ContactSection profile={p} social={social.data ?? []} />
+        <ContactHub profile={p} social={social.data ?? []} />
       </main>
-      <SiteFooter profile={p} />
+      <SiteFooter profile={p} social={social.data ?? []} />
+
       <PageviewTracker />
     </>
   );
