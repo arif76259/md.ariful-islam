@@ -190,8 +190,9 @@ export function RecommendationsSection({ items }: { items: Recommendation[] }) {
         </h2>
         <p className="mt-6 max-w-2xl text-muted-foreground">
           Mentors, teammates and co-organizers are welcome to share their experience of working with
-          me. Every message is reviewed before it is published here.
+          me.
         </p>
+
       </Reveal>
 
       {items.length > 0 && (
@@ -249,11 +250,9 @@ export function RecommendationsSection({ items }: { items: Recommendation[] }) {
       <Reveal>
         <div className="mt-12 flex flex-wrap items-center gap-4">
           <SubmitDialog />
-          <p className="text-sm text-muted-foreground">
-            Your message stays private until it is approved.
-          </p>
         </div>
       </Reveal>
+
     </Section>
   );
 }

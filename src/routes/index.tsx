@@ -4,11 +4,11 @@ import { queries } from "@/lib/cms";
 import { SiteNav } from "@/components/site/SiteNav";
 import { PageviewTracker } from "@/components/site/PageviewTracker";
 import { RecommendationsSection } from "@/components/site/Recommendations";
+import { ContactHub } from "@/components/site/ContactHub";
 import {
   About,
   AmbassadorSection,
   CommunitySection,
-  ContactSection,
   DigitalOps,
   EventsSection,
   ExperienceSection,
@@ -17,6 +17,7 @@ import {
   SiteFooter,
   SkillsSection,
 } from "@/components/site/Sections";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -96,9 +97,10 @@ function Index() {
         <CommunitySection items={community.data ?? []} />
         <SkillsSection items={skills.data ?? []} />
         <RecommendationsSection items={recommendations.data ?? []} />
-        <ContactSection profile={p} social={social.data ?? []} />
+        <ContactHub profile={p} social={social.data ?? []} />
       </main>
-      <SiteFooter profile={p} />
+      <SiteFooter profile={p} social={social.data ?? []} />
+
       <PageviewTracker />
     </>
   );
