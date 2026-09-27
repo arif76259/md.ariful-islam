@@ -538,78 +538,36 @@ export function SkillsSection({ items }: { items: Skill[] }) {
   );
 }
 
-/* --------------------------------- Contact --------------------------------- */
+/* --------------------------------- Footer --------------------------------- */
 
-export function ContactSection({
-  profile,
-  social,
-}: {
-  profile: Profile;
-  social: SocialLink[];
-}) {
-  return (
-    <Section id="contact" className="atmos">
-      <Reveal>
-        <SectionLabel index="10">Contact</SectionLabel>
-        <h2 className="font-display mt-6 max-w-4xl text-[clamp(2.2rem,6vw,4.5rem)] leading-[1.02] font-bold">
-          Let&apos;s build something <span className="text-gradient">worth organizing</span>.
-        </h2>
-      </Reveal>
-
-      <div className="mt-14 grid gap-5 md:grid-cols-3">
-        {[
-          [Mail, "Email", profile.email, `mailto:${profile.email}`],
-          [Phone, "Phone", profile.phone, `tel:${profile.phone.replace(/[^+\d]/g, "")}`],
-          [MapPin, "Location", profile.location, null],
-        ].map(([Icon, label, value, href], i) => {
-          const I = Icon as typeof Mail;
-          const inner = (
-            <div className="h-full rounded-2xl border border-border bg-surface-2/50 p-6 transition-colors hover:border-[color:var(--accent)]/45">
-              <I className="h-5 w-5 text-[color:var(--accent)]" />
-              <p className="label-mono mt-4 text-muted-foreground">{label as string}</p>
-              <p className="mt-2 text-sm break-words">{value as string}</p>
-            </div>
-          );
-          return (
-            <Reveal key={label as string} delay={i * 0.05}>
-              {href ? (
-                <a href={href as string} className="block h-full">
-                  {inner}
-                </a>
-              ) : (
-                inner
-              )}
-            </Reveal>
-          );
-        })}
-      </div>
-
-      {social.length > 0 && (
-        <Reveal delay={0.1}>
-          <div className="mt-8 flex flex-wrap gap-3">
-            {social.map((s) => (
-              <Button key={s.id} asChild variant="outline" size="sm">
-                <a href={s.url} target="_blank" rel="noreferrer">
-                  {s.label} <ArrowUpRight className="h-3.5 w-3.5" />
-                </a>
-              </Button>
-            ))}
-          </div>
-        </Reveal>
-      )}
-    </Section>
-  );
-}
-
-export function SiteFooter({ profile }: { profile: Profile }) {
+export function SiteFooter({ profile, social }: { profile: Profile; social: SocialLink[] }) {
   return (
     <footer className="border-t border-border px-6 py-10 lg:px-12">
       <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4">
         <p className="label-mono text-muted-foreground">
-          © {new Date().getFullYear()} {profile.name}
+          © {new Date().getFullYear()} {profile.name} · {profile.location}
         </p>
-        <p className="label-mono text-muted-foreground">{profile.location}</p>
+        <div className="flex flex-wrap items-center gap-4">
+          {social.map((s) => (
+            <a
+              key={s.id}
+              href={s.url}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="label-mono text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {s.label}
+            </a>
+          ))}
+          <a
+            href={`mailto:${profile.email}`}
+            className="label-mono text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Email
+          </a>
+        </div>
       </div>
     </footer>
   );
 }
+
