@@ -13,6 +13,8 @@ import {
   Images,
   LayoutDashboard,
   LogOut,
+  Mail,
+
   Menu,
   MessageSquareQuote,
   Palette,
@@ -37,6 +39,8 @@ const NAV = [
   { to: "/admin/skills", label: "Skills", icon: Gauge },
   { to: "/admin/community", label: "Community", icon: Share2 },
   { to: "/admin/recommendations", label: "Recommendations", icon: MessageSquareQuote },
+  { to: "/admin/messages", label: "Messages", icon: Mail },
+
   { to: "/admin/media", label: "Media", icon: Images },
   { to: "/admin/appearance", label: "Appearance", icon: Palette },
   { to: "/admin/seo", label: "SEO", icon: Search },
