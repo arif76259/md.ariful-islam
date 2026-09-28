@@ -16,6 +16,7 @@ import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminGateAmbassadorsRouteImport } from './routes/admin/_gate/ambassadors'
 import { Route as AdminGateAnalyticsRouteImport } from './routes/admin/_gate/analytics'
 import { Route as AdminGateAppearanceRouteImport } from './routes/admin/_gate/appearance'
+import { Route as AdminGateArticlesRouteImport } from './routes/admin/_gate/articles'
 import { Route as AdminGateCommunityRouteImport } from './routes/admin/_gate/community'
 import { Route as AdminGateDashboardRouteImport } from './routes/admin/_gate/dashboard'
 import { Route as AdminGateEventsRouteImport } from './routes/admin/_gate/events'
@@ -63,6 +64,11 @@ const AdminGateAnalyticsRoute = AdminGateAnalyticsRouteImport.update({
 const AdminGateAppearanceRoute = AdminGateAppearanceRouteImport.update({
   id: '/appearance',
   path: '/appearance',
+  getParentRoute: () => AdminGateRoute,
+} as any)
+const AdminGateArticlesRoute = AdminGateArticlesRouteImport.update({
+  id: '/articles',
+  path: '/articles',
   getParentRoute: () => AdminGateRoute,
 } as any)
 const AdminGateCommunityRoute = AdminGateCommunityRouteImport.update({
@@ -140,6 +146,7 @@ export interface FileRoutesByFullPath {
   '/admin/ambassadors': typeof AdminGateAmbassadorsRoute
   '/admin/analytics': typeof AdminGateAnalyticsRoute
   '/admin/appearance': typeof AdminGateAppearanceRoute
+  '/admin/articles': typeof AdminGateArticlesRoute
   '/admin/community': typeof AdminGateCommunityRoute
   '/admin/dashboard': typeof AdminGateDashboardRoute
   '/admin/events': typeof AdminGateEventsRoute
@@ -162,6 +169,7 @@ export interface FileRoutesByTo {
   '/admin/ambassadors': typeof AdminGateAmbassadorsRoute
   '/admin/analytics': typeof AdminGateAnalyticsRoute
   '/admin/appearance': typeof AdminGateAppearanceRoute
+  '/admin/articles': typeof AdminGateArticlesRoute
   '/admin/community': typeof AdminGateCommunityRoute
   '/admin/dashboard': typeof AdminGateDashboardRoute
   '/admin/events': typeof AdminGateEventsRoute
@@ -185,6 +193,7 @@ export interface FileRoutesById {
   '/admin/_gate/ambassadors': typeof AdminGateAmbassadorsRoute
   '/admin/_gate/analytics': typeof AdminGateAnalyticsRoute
   '/admin/_gate/appearance': typeof AdminGateAppearanceRoute
+  '/admin/_gate/articles': typeof AdminGateArticlesRoute
   '/admin/_gate/community': typeof AdminGateCommunityRoute
   '/admin/_gate/dashboard': typeof AdminGateDashboardRoute
   '/admin/_gate/events': typeof AdminGateEventsRoute
@@ -209,6 +218,7 @@ export interface FileRouteTypes {
     | '/admin/ambassadors'
     | '/admin/analytics'
     | '/admin/appearance'
+    | '/admin/articles'
     | '/admin/community'
     | '/admin/dashboard'
     | '/admin/events'
@@ -231,6 +241,7 @@ export interface FileRouteTypes {
     | '/admin/ambassadors'
     | '/admin/analytics'
     | '/admin/appearance'
+    | '/admin/articles'
     | '/admin/community'
     | '/admin/dashboard'
     | '/admin/events'
@@ -253,6 +264,7 @@ export interface FileRouteTypes {
     | '/admin/_gate/ambassadors'
     | '/admin/_gate/analytics'
     | '/admin/_gate/appearance'
+    | '/admin/_gate/articles'
     | '/admin/_gate/community'
     | '/admin/_gate/dashboard'
     | '/admin/_gate/events'
@@ -324,6 +336,13 @@ declare module '@tanstack/react-router' {
       path: '/appearance'
       fullPath: '/admin/appearance'
       preLoaderRoute: typeof AdminGateAppearanceRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
+    '/admin/_gate/articles': {
+      id: '/admin/_gate/articles'
+      path: '/articles'
+      fullPath: '/admin/articles'
+      preLoaderRoute: typeof AdminGateArticlesRouteImport
       parentRoute: typeof AdminGateRoute
     }
     '/admin/_gate/community': {
@@ -424,6 +443,7 @@ interface AdminGateRouteChildren {
   AdminGateAmbassadorsRoute: typeof AdminGateAmbassadorsRoute
   AdminGateAnalyticsRoute: typeof AdminGateAnalyticsRoute
   AdminGateAppearanceRoute: typeof AdminGateAppearanceRoute
+  AdminGateArticlesRoute: typeof AdminGateArticlesRoute
   AdminGateCommunityRoute: typeof AdminGateCommunityRoute
   AdminGateDashboardRoute: typeof AdminGateDashboardRoute
   AdminGateEventsRoute: typeof AdminGateEventsRoute
@@ -443,6 +463,7 @@ const AdminGateRouteChildren: AdminGateRouteChildren = {
   AdminGateAmbassadorsRoute: AdminGateAmbassadorsRoute,
   AdminGateAnalyticsRoute: AdminGateAnalyticsRoute,
   AdminGateAppearanceRoute: AdminGateAppearanceRoute,
+  AdminGateArticlesRoute: AdminGateArticlesRoute,
   AdminGateCommunityRoute: AdminGateCommunityRoute,
   AdminGateDashboardRoute: AdminGateDashboardRoute,
   AdminGateEventsRoute: AdminGateEventsRoute,
