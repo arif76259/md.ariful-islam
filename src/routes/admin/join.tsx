@@ -29,8 +29,8 @@ function Join() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!token) return;
-    if (password.length < 10) return toast.error("Password must be at least 10 characters");
+    if (!token) { return; }
+    if (password.length < 10) { toast.error("Password must be at least 10 characters"); return; }
     setBusy(true);
     try {
       let { error } = await supabase.auth.signUp({ email, password });

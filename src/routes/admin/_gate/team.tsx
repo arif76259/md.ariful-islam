@@ -54,7 +54,7 @@ function Team() {
       .insert({ created_by: uid, email: inviteEmail.trim() || null })
       .select("token")
       .single();
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     await navigator.clipboard.writeText(link(data.token)).catch(() => {});
     toast.success("Invite link created and copied");
     setInviteEmail("");
@@ -63,7 +63,7 @@ function Team() {
 
   async function addDirect(e: React.FormEvent) {
     e.preventDefault();
-    if (password.length < 10) return toast.error("Password must be at least 10 characters");
+    if (password.length < 10) { toast.error("Password must be at least 10 characters"); return; }
     setBusy(true);
     try {
       await createFn({ data: { email, password } });
@@ -81,14 +81,14 @@ function Team() {
   async function revoke(id: string) {
     if (!confirm("Remove admin access for this person?")) return;
     const { error } = await supabase.rpc("revoke_admin", { _user_id: id });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Access removed");
     qc.invalidateQueries({ queryKey: ["admins"] });
   }
 
   async function cancelInvite(id: string) {
     const { error } = await supabase.from("admin_invites").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["admin_invites"] });
   }
 
