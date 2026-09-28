@@ -39,6 +39,16 @@ export const cms = {
   caseSteps: () => many<CaseStep>("case_steps"),
   social: () => many<SocialLink>("social_links"),
   media: () => many<MediaItem>("media", "created_at"),
+  articles: async () => {
+    const { data, error } = await supabase
+      .from("articles")
+      .select("*")
+      .eq("published", true)
+      .order("featured", { ascending: false })
+      .order("sort_order", { ascending: true });
+    if (error) throw error;
+    return data ?? [];
+  },
   recommendations: async () => {
     const { data, error } = await supabase
       .from("recommendations")
@@ -53,6 +63,7 @@ export const cms = {
 };
 
 export const queries = {
+  articles: { queryKey: ["public_articles"], queryFn: cms.articles },
   profile: { queryKey: ["profile"], queryFn: cms.profile },
   settings: { queryKey: ["site_settings"], queryFn: cms.settings },
   experiences: { queryKey: ["experiences"], queryFn: cms.experiences },

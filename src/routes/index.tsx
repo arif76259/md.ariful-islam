@@ -5,6 +5,7 @@ import { getPublicSeo } from "@/lib/team.functions";
 import { SiteNav } from "@/components/site/SiteNav";
 import { PageviewTracker } from "@/components/site/PageviewTracker";
 import { RecommendationsSection } from "@/components/site/Recommendations";
+import { InsightsSection } from "@/components/site/Insights";
 import { ContactHub } from "@/components/site/ContactHub";
 import {
   About,
@@ -63,6 +64,7 @@ function Index() {
   const social = useQuery(queries.social);
   const settings = useQuery(queries.settings);
   const recommendations = useQuery(queries.recommendations);
+  const articles = useQuery(queries.articles);
 
   if (!profile.data) {
     return (
@@ -105,6 +107,7 @@ function Index() {
         <DigitalOps steps={caseSteps.data ?? []} skills={skills.data ?? []} />
         <ProjectsSection items={projects.data ?? []} />
         <CommunitySection items={community.data ?? []} />
+        <InsightsSection items={articles.data ?? []} />
         <SkillsSection items={skills.data ?? []} />
         <RecommendationsSection items={recommendations.data ?? []} />
         <ContactHub profile={p} social={social.data ?? []} />

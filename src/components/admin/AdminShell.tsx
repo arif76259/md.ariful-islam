@@ -5,6 +5,7 @@ import { queries } from "@/lib/cms";
 
 import {
   BarChart3,
+  BookOpen,
   Bell,
   Briefcase,
   CalendarDays,
@@ -37,6 +38,7 @@ const NAV = [
   { to: "/admin/ambassadors", label: "Ambassadors", icon: Users },
   { to: "/admin/projects", label: "Projects", icon: Sparkles },
   { to: "/admin/skills", label: "Skills", icon: Gauge },
+  { to: "/admin/articles", label: "Case Studies", icon: BookOpen },
   { to: "/admin/community", label: "Community", icon: Share2 },
   { to: "/admin/recommendations", label: "Recommendations", icon: MessageSquareQuote },
   { to: "/admin/messages", label: "Messages", icon: Mail },
