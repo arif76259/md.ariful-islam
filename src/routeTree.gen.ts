@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminGateRouteImport } from './routes/admin/_gate'
+import { Route as AdminJoinRouteImport } from './routes/admin/join'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminGateAmbassadorsRouteImport } from './routes/admin/_gate/ambassadors'
 import { Route as AdminGateAnalyticsRouteImport } from './routes/admin/_gate/analytics'
@@ -27,6 +28,7 @@ import { Route as AdminGateRecommendationsRouteImport } from './routes/admin/_ga
 import { Route as AdminGateSeoRouteImport } from './routes/admin/_gate/seo'
 import { Route as AdminGateSettingsRouteImport } from './routes/admin/_gate/settings'
 import { Route as AdminGateSkillsRouteImport } from './routes/admin/_gate/skills'
+import { Route as AdminGateTeamRouteImport } from './routes/admin/_gate/team'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -36,6 +38,11 @@ const IndexRoute = IndexRouteImport.update({
 const AdminGateRoute = AdminGateRouteImport.update({
   id: '/admin/_gate',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminJoinRoute = AdminJoinRouteImport.update({
+  id: '/admin/join',
+  path: '/admin/join',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
@@ -119,10 +126,16 @@ const AdminGateSkillsRoute = AdminGateSkillsRouteImport.update({
   path: '/skills',
   getParentRoute: () => AdminGateRoute,
 } as any)
+const AdminGateTeamRoute = AdminGateTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AdminGateRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminGateRouteWithChildren
+  '/admin/join': typeof AdminJoinRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/ambassadors': typeof AdminGateAmbassadorsRoute
   '/admin/analytics': typeof AdminGateAnalyticsRoute
@@ -139,10 +152,12 @@ export interface FileRoutesByFullPath {
   '/admin/seo': typeof AdminGateSeoRoute
   '/admin/settings': typeof AdminGateSettingsRoute
   '/admin/skills': typeof AdminGateSkillsRoute
+  '/admin/team': typeof AdminGateTeamRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminGateRouteWithChildren
+  '/admin/join': typeof AdminJoinRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/ambassadors': typeof AdminGateAmbassadorsRoute
   '/admin/analytics': typeof AdminGateAnalyticsRoute
@@ -159,11 +174,13 @@ export interface FileRoutesByTo {
   '/admin/seo': typeof AdminGateSeoRoute
   '/admin/settings': typeof AdminGateSettingsRoute
   '/admin/skills': typeof AdminGateSkillsRoute
+  '/admin/team': typeof AdminGateTeamRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin/_gate': typeof AdminGateRouteWithChildren
+  '/admin/join': typeof AdminJoinRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/_gate/ambassadors': typeof AdminGateAmbassadorsRoute
   '/admin/_gate/analytics': typeof AdminGateAnalyticsRoute
@@ -180,12 +197,14 @@ export interface FileRoutesById {
   '/admin/_gate/seo': typeof AdminGateSeoRoute
   '/admin/_gate/settings': typeof AdminGateSettingsRoute
   '/admin/_gate/skills': typeof AdminGateSkillsRoute
+  '/admin/_gate/team': typeof AdminGateTeamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/admin'
+    | '/admin/join'
     | '/admin/login'
     | '/admin/ambassadors'
     | '/admin/analytics'
@@ -202,10 +221,12 @@ export interface FileRouteTypes {
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/skills'
+    | '/admin/team'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
+    | '/admin/join'
     | '/admin/login'
     | '/admin/ambassadors'
     | '/admin/analytics'
@@ -222,10 +243,12 @@ export interface FileRouteTypes {
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/skills'
+    | '/admin/team'
   id:
     | '__root__'
     | '/'
     | '/admin/_gate'
+    | '/admin/join'
     | '/admin/login'
     | '/admin/_gate/ambassadors'
     | '/admin/_gate/analytics'
@@ -242,11 +265,13 @@ export interface FileRouteTypes {
     | '/admin/_gate/seo'
     | '/admin/_gate/settings'
     | '/admin/_gate/skills'
+    | '/admin/_gate/team'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminGateRoute: typeof AdminGateRouteWithChildren
+  AdminJoinRoute: typeof AdminJoinRoute
   AdminLoginRoute: typeof AdminLoginRoute
 }
 
@@ -264,6 +289,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminGateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/join': {
+      id: '/admin/join'
+      path: '/admin/join'
+      fullPath: '/admin/join'
+      preLoaderRoute: typeof AdminJoinRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/login': {
@@ -378,6 +410,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminGateSkillsRouteImport
       parentRoute: typeof AdminGateRoute
     }
+    '/admin/_gate/team': {
+      id: '/admin/_gate/team'
+      path: '/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AdminGateTeamRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
   }
 }
 
@@ -397,6 +436,7 @@ interface AdminGateRouteChildren {
   AdminGateSeoRoute: typeof AdminGateSeoRoute
   AdminGateSettingsRoute: typeof AdminGateSettingsRoute
   AdminGateSkillsRoute: typeof AdminGateSkillsRoute
+  AdminGateTeamRoute: typeof AdminGateTeamRoute
 }
 
 const AdminGateRouteChildren: AdminGateRouteChildren = {
@@ -415,6 +455,7 @@ const AdminGateRouteChildren: AdminGateRouteChildren = {
   AdminGateSeoRoute: AdminGateSeoRoute,
   AdminGateSettingsRoute: AdminGateSettingsRoute,
   AdminGateSkillsRoute: AdminGateSkillsRoute,
+  AdminGateTeamRoute: AdminGateTeamRoute,
 }
 
 const AdminGateRouteWithChildren = AdminGateRoute._addFileChildren(
@@ -424,6 +465,7 @@ const AdminGateRouteWithChildren = AdminGateRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminGateRoute: AdminGateRouteWithChildren,
+  AdminJoinRoute: AdminJoinRoute,
   AdminLoginRoute: AdminLoginRoute,
 }
 export const routeTree = rootRouteImport

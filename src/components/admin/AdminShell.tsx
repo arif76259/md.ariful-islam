@@ -44,6 +44,7 @@ const NAV = [
   { to: "/admin/media", label: "Media", icon: Images },
   { to: "/admin/appearance", label: "Appearance", icon: Palette },
   { to: "/admin/seo", label: "SEO", icon: Search },
+  { to: "/admin/team", label: "Team", icon: Users },
   { to: "/admin/settings", label: "Settings", icon: Settings },
 ] as const;
 
