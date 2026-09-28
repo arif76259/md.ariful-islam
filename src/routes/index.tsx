@@ -19,26 +19,35 @@ import {
 } from "@/components/site/Sections";
 
 
+const DEF_TITLE = "Md. Ariful Islam | BBA Student & Student Leader";
+const DEF_DESC =
+  "BBA student at Army IBA Sylhet. Student leader, event and project coordinator working across leadership, events, ambassador programs and digital operations.";
+
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Md. Ariful Islam | BBA Student & Student Leader" },
-      {
-        name: "description",
-        content:
-          "BBA student at Army IBA Sylhet. Student leader, event and project coordinator working across leadership, events, ambassador programs and digital operations.",
-      },
-      { property: "og:title", content: "Md. Ariful Islam | BBA Student & Student Leader" },
-      {
-        property: "og:description",
-        content:
-          "Leadership, event management, project coordination and digital operations — the work of Md. Ariful Islam.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
-    ],
-    links: [{ rel: "canonical", href: "/" }],
-  }),
+  loader: () => getPublicSeo(),
+  head: ({ loaderData }) => {
+    const s = loaderData;
+    const title = s?.seo_title || DEF_TITLE;
+    const desc = s?.seo_description || DEF_DESC;
+    const ogTitle = s?.og_title || title;
+    const ogDesc = s?.og_description || desc;
+    const meta: Array<Record<string, string>> = [
+      { title },
+      { name: "description", content: desc },
+      { property: "og:title", content: ogTitle },
+      { property: "og:description", content: ogDesc },
+      { property: "og:type", content: "profile" },
+      { name: "twitter:card", content: s?.image ? "summary_large_image" : "summary" },
+      { name: "twitter:title", content: ogTitle },
+      { name: "twitter:description", content: ogDesc },
+    ];
+    if (s?.keywords) meta.push({ name: "keywords", content: s.keywords });
+    if (s?.image) {
+      meta.push({ property: "og:image", content: s.image });
+      meta.push({ name: "twitter:image", content: s.image });
+    }
+    return { meta };
+  },
   component: Index,
 });
 
