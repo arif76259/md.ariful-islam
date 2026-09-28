@@ -89,6 +89,51 @@ export type Database = {
         }
         Relationships: []
       }
+      articles: {
+        Row: {
+          body: string
+          category: string
+          cover_url: string | null
+          created_at: string
+          featured: boolean
+          gallery: string[]
+          id: string
+          published: boolean
+          sort_order: number
+          summary: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string
+          category?: string
+          cover_url?: string | null
+          created_at?: string
+          featured?: boolean
+          gallery?: string[]
+          id?: string
+          published?: boolean
+          sort_order?: number
+          summary?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          category?: string
+          cover_url?: string | null
+          created_at?: string
+          featured?: boolean
+          gallery?: string[]
+          id?: string
+          published?: boolean
+          sort_order?: number
+          summary?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       case_steps: {
         Row: {
           created_at: string
