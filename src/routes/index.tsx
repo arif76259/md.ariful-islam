@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { queries } from "@/lib/cms";
+import { getPublicSeo } from "@/lib/team.functions";
 import { SiteNav } from "@/components/site/SiteNav";
 import { PageviewTracker } from "@/components/site/PageviewTracker";
 import { RecommendationsSection } from "@/components/site/Recommendations";
