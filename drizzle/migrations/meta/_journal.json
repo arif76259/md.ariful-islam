@@ -57,6 +57,13 @@
       "when": 1790600487426,
       "tag": "0007_admin_team_and_spam_guard",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1790600928042,
+      "tag": "0008_create_articles",
+      "breakpoints": true
     }
   ]
 }

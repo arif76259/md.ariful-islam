@@ -4,6 +4,6 @@
 - [x] Spam protection (submission rate limits)
 - [x] Social share previews
 - [ ] Contact email alerts — needs a custom email domain
-- [ ] Case studies / insights section
+- [x] Case studies / insights section
 - [ ] 2FA (authenticator app)
 - [ ] Draft / preview / publish workflow
