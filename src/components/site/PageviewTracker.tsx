@@ -5,11 +5,18 @@ import { supabase } from "@/integrations/supabase/client";
 export function PageviewTracker() {
   useEffect(() => {
     // Count every visit — preview and published site alike.
-    void supabase.from("pageviews").insert({
-      path: window.location.pathname,
-      referrer: document.referrer || "",
-      user_agent: navigator.userAgent || "",
-    });
+    console.log("[pv] tracking", window.location.pathname);
+    supabase
+      .from("pageviews")
+      .insert({
+        path: window.location.pathname,
+        referrer: document.referrer || "",
+        user_agent: navigator.userAgent || "",
+      })
+      .then(({ error }) => {
+        if (error) console.warn("[pv] insert failed", error.message);
+        else console.log("[pv] recorded");
+      });
   }, []);
   return null;
 }
