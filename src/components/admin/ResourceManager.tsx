@@ -294,6 +294,51 @@ export function ResourceManager({
                 onChange={(v) => setForm((s) => ({ ...s, [f.key]: v }))}
               />
             ))}
+            {aiPolish && (
+              <div className="space-y-3 rounded-xl border border-dashed border-border p-4">
+                <div className="flex items-center justify-between">
+                  <Label className="flex items-center gap-1.5">
+                    <Sparkles className="h-3.5 w-3.5 text-[color:var(--accent)]" /> AI polish (optional)
+                  </Label>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    disabled={polish.isPending || String(form["__aiNotes"] ?? "").trim() === ""}
+                    onClick={() =>
+                      polish.mutate({
+                        kind: aiPolish.kind,
+                        notes: String(form["__aiNotes"] ?? ""),
+                        title: (form[aiPolish.titleKey ?? titleKey] as string) ?? null,
+                        summary: aiPolish.summaryKey
+                          ? ((form[aiPolish.summaryKey] as string) ?? null)
+                          : null,
+                        description: aiPolish.descriptionKey
+                          ? ((form[aiPolish.descriptionKey] as string) ?? null)
+                          : null,
+                      })
+                    }
+                  >
+                    {polish.isPending ? (
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                    ) : (
+                      <Sparkles className="h-3.5 w-3.5" />
+                    )}
+                    Polish with AI
+                  </Button>
+                </div>
+                <Textarea
+                  rows={4}
+                  placeholder="Rough notes for the AI — bullet points or a couple of sentences are fine. Every fact comes from here; nothing is invented."
+                  value={(form["__aiNotes"] as string) ?? ""}
+                  onChange={(e) => setForm((s) => ({ ...s, __aiNotes: e.target.value }))}
+                />
+                <p className="text-xs text-muted-foreground">
+                  The AI rewrites your notes into polished fields. Review and edit before saving —
+                  facts are never invented.
+                </p>
+              </div>
+            )}
             <DialogFooter>
               <Button type="button" variant="ghost" onClick={() => setOpen(false)}>
                 Cancel
