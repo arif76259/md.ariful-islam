@@ -45,6 +45,7 @@ function ExperienceAdmin() {
       titleKey="title"
       subtitleKey="organization"
       filter={(r) => r["category"] !== "Event"}
+      aiPolish={{ kind: "experience", titleKey: "title", descriptionKey: "description" }}
     />
   );
 }
