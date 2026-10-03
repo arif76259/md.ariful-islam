@@ -8,4 +8,4 @@
 - [ ] 2FA (authenticator app)
 - [ ] Draft / preview / publish workflow
 - [x] Hero right-side dead space fixed (photo fills its column)
-- [ ] AI polish: rough notes → polished portfolio entry (Lovable AI Gateway)
+- [x] AI polish: rough notes → polished portfolio entry (Lovable AI Gateway)
