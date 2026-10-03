@@ -207,7 +207,8 @@ export function ResourceManager({
         return;
       }
     }
-    save.mutate(form);
+    const { __aiNotes: _notes, ...payload } = form;
+    save.mutate(payload);
   }
 
   return (
