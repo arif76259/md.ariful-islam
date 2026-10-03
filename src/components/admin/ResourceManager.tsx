@@ -61,6 +61,7 @@ export function ResourceManager({
   titleKey,
   subtitleKey,
   filter,
+  aiPolish,
 }: {
   table: string;
   queryKey: string;
@@ -71,6 +72,7 @@ export function ResourceManager({
   titleKey: string;
   subtitleKey?: string;
   filter?: (row: Row) => boolean;
+  aiPolish?: AiPolishConfig;
 }) {
   const queryClient = useQueryClient();
   const [editing, setEditing] = useState<Row | null>(null);
@@ -169,6 +171,28 @@ export function ResourceManager({
     setForm(next);
     setOpen(true);
   }
+
+  const polish = useMutation({
+    mutationFn: async (input: {
+      kind: "project" | "experience" | "case_study";
+      notes: string;
+      title?: string | null;
+      summary?: string | null;
+      description?: string | null;
+    }) => polishEntry({ data: input }),
+    onSuccess: (result) => {
+      setForm((s) => ({
+        ...s,
+        ...(aiPolish?.titleKey && result.title ? { [aiPolish.titleKey]: result.title } : {}),
+        ...(aiPolish?.summaryKey && result.summary ? { [aiPolish.summaryKey]: result.summary } : {}),
+        ...(aiPolish?.descriptionKey && result.description
+          ? { [aiPolish.descriptionKey]: result.description }
+          : {}),
+      }));
+      toast.success("Polished with AI. Review the fields before saving.");
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
