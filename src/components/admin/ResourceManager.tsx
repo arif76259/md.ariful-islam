@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { ArrowDown, ArrowUp, Loader2, Pencil, Plus, Star, Trash2 } from "lucide-react";
+import { ArrowDown, ArrowUp, Loader2, Pencil, Plus, Sparkles, Star, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,8 +28,16 @@ import {
 } from "@/components/ui/alert-dialog";
 import { ImageField } from "./ImageField";
 import { PageHeader } from "./AdminShell";
+import { polishEntry } from "@/lib/ai-polish.functions";
 
 export type FieldType = "text" | "textarea" | "number" | "switch" | "list" | "image";
+
+export interface AiPolishConfig {
+  kind: "project" | "experience" | "case_study";
+  titleKey?: string;
+  summaryKey?: string;
+  descriptionKey?: string;
+}
 
 export interface FieldDef {
   key: string;
@@ -53,6 +61,7 @@ export function ResourceManager({
   titleKey,
   subtitleKey,
   filter,
+  aiPolish,
 }: {
   table: string;
   queryKey: string;
@@ -63,6 +72,7 @@ export function ResourceManager({
   titleKey: string;
   subtitleKey?: string;
   filter?: (row: Row) => boolean;
+  aiPolish?: AiPolishConfig;
 }) {
   const queryClient = useQueryClient();
   const [editing, setEditing] = useState<Row | null>(null);
@@ -162,6 +172,28 @@ export function ResourceManager({
     setOpen(true);
   }
 
+  const polish = useMutation({
+    mutationFn: async (input: {
+      kind: "project" | "experience" | "case_study";
+      notes: string;
+      title?: string | null;
+      summary?: string | null;
+      description?: string | null;
+    }) => polishEntry({ data: input }),
+    onSuccess: (result) => {
+      setForm((s) => ({
+        ...s,
+        ...(aiPolish?.titleKey && result.title ? { [aiPolish.titleKey]: result.title } : {}),
+        ...(aiPolish?.summaryKey && result.summary ? { [aiPolish.summaryKey]: result.summary } : {}),
+        ...(aiPolish?.descriptionKey && result.description
+          ? { [aiPolish.descriptionKey]: result.description }
+          : {}),
+      }));
+      toast.success("Polished with AI. Review the fields before saving.");
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
   function submit(e: React.FormEvent) {
     e.preventDefault();
     for (const f of fields) {
@@ -175,7 +207,8 @@ export function ResourceManager({
         return;
       }
     }
-    save.mutate(form);
+    const { __aiNotes: _notes, ...payload } = form;
+    save.mutate(payload);
   }
 
   return (
@@ -262,6 +295,51 @@ export function ResourceManager({
                 onChange={(v) => setForm((s) => ({ ...s, [f.key]: v }))}
               />
             ))}
+            {aiPolish && (
+              <div className="space-y-3 rounded-xl border border-dashed border-border p-4">
+                <div className="flex items-center justify-between">
+                  <Label className="flex items-center gap-1.5">
+                    <Sparkles className="h-3.5 w-3.5 text-[color:var(--accent)]" /> AI polish (optional)
+                  </Label>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    disabled={polish.isPending || String(form["__aiNotes"] ?? "").trim() === ""}
+                    onClick={() =>
+                      polish.mutate({
+                        kind: aiPolish.kind,
+                        notes: String(form["__aiNotes"] ?? ""),
+                        title: (form[aiPolish.titleKey ?? titleKey] as string) ?? null,
+                        summary: aiPolish.summaryKey
+                          ? ((form[aiPolish.summaryKey] as string) ?? null)
+                          : null,
+                        description: aiPolish.descriptionKey
+                          ? ((form[aiPolish.descriptionKey] as string) ?? null)
+                          : null,
+                      })
+                    }
+                  >
+                    {polish.isPending ? (
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                    ) : (
+                      <Sparkles className="h-3.5 w-3.5" />
+                    )}
+                    Polish with AI
+                  </Button>
+                </div>
+                <Textarea
+                  rows={4}
+                  placeholder="Rough notes for the AI — bullet points or a couple of sentences are fine. Every fact comes from here; nothing is invented."
+                  value={(form["__aiNotes"] as string) ?? ""}
+                  onChange={(e) => setForm((s) => ({ ...s, __aiNotes: e.target.value }))}
+                />
+                <p className="text-xs text-muted-foreground">
+                  The AI rewrites your notes into polished fields. Review and edit before saving —
+                  facts are never invented.
+                </p>
+              </div>
+            )}
             <DialogFooter>
               <Button type="button" variant="ghost" onClick={() => setOpen(false)}>
                 Cancel

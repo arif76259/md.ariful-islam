@@ -34,6 +34,7 @@ function ProjectsAdmin() {
         { key: "github_link", label: "GitHub link", type: "text", max: 300 },
         { key: "featured", label: "Featured", type: "switch" },
       ]}
+      aiPolish={{ kind: "project", titleKey: "name", descriptionKey: "description" }}
       defaults={{
         name: "",
         tagline: "",

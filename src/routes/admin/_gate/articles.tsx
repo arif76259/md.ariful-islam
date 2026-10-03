@@ -34,6 +34,7 @@ function ArticlesAdmin() {
         published: false,
         featured: false,
       }}
+      aiPolish={{ kind: "case_study", titleKey: "title", summaryKey: "summary", descriptionKey: "body" }}
     />
   );
 }
