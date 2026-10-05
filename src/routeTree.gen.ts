@@ -27,6 +27,7 @@ import { Route as AdminGateMessagesRouteImport } from './routes/admin/_gate/mess
 import { Route as AdminGateProfileRouteImport } from './routes/admin/_gate/profile'
 import { Route as AdminGateProjectsRouteImport } from './routes/admin/_gate/projects'
 import { Route as AdminGateRecommendationsRouteImport } from './routes/admin/_gate/recommendations'
+import { Route as AdminGateSecurityRouteImport } from './routes/admin/_gate/security'
 import { Route as AdminGateSeoRouteImport } from './routes/admin/_gate/seo'
 import { Route as AdminGateSettingsRouteImport } from './routes/admin/_gate/settings'
 import { Route as AdminGateSkillsRouteImport } from './routes/admin/_gate/skills'
@@ -123,6 +124,11 @@ const AdminGateRecommendationsRoute =
     path: '/recommendations',
     getParentRoute: () => AdminGateRoute,
   } as any)
+const AdminGateSecurityRoute = AdminGateSecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
+  getParentRoute: () => AdminGateRoute,
+} as any)
 const AdminGateSeoRoute = AdminGateSeoRouteImport.update({
   id: '/seo',
   path: '/seo',
@@ -163,6 +169,7 @@ export interface FileRoutesByFullPath {
   '/admin/profile': typeof AdminGateProfileRoute
   '/admin/projects': typeof AdminGateProjectsRoute
   '/admin/recommendations': typeof AdminGateRecommendationsRoute
+  '/admin/security': typeof AdminGateSecurityRoute
   '/admin/seo': typeof AdminGateSeoRoute
   '/admin/settings': typeof AdminGateSettingsRoute
   '/admin/skills': typeof AdminGateSkillsRoute
@@ -187,6 +194,7 @@ export interface FileRoutesByTo {
   '/admin/profile': typeof AdminGateProfileRoute
   '/admin/projects': typeof AdminGateProjectsRoute
   '/admin/recommendations': typeof AdminGateRecommendationsRoute
+  '/admin/security': typeof AdminGateSecurityRoute
   '/admin/seo': typeof AdminGateSeoRoute
   '/admin/settings': typeof AdminGateSettingsRoute
   '/admin/skills': typeof AdminGateSkillsRoute
@@ -212,6 +220,7 @@ export interface FileRoutesById {
   '/admin/_gate/profile': typeof AdminGateProfileRoute
   '/admin/_gate/projects': typeof AdminGateProjectsRoute
   '/admin/_gate/recommendations': typeof AdminGateRecommendationsRoute
+  '/admin/_gate/security': typeof AdminGateSecurityRoute
   '/admin/_gate/seo': typeof AdminGateSeoRoute
   '/admin/_gate/settings': typeof AdminGateSettingsRoute
   '/admin/_gate/skills': typeof AdminGateSkillsRoute
@@ -238,6 +247,7 @@ export interface FileRouteTypes {
     | '/admin/profile'
     | '/admin/projects'
     | '/admin/recommendations'
+    | '/admin/security'
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/skills'
@@ -262,6 +272,7 @@ export interface FileRouteTypes {
     | '/admin/profile'
     | '/admin/projects'
     | '/admin/recommendations'
+    | '/admin/security'
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/skills'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/admin/_gate/profile'
     | '/admin/_gate/projects'
     | '/admin/_gate/recommendations'
+    | '/admin/_gate/security'
     | '/admin/_gate/seo'
     | '/admin/_gate/settings'
     | '/admin/_gate/skills'
@@ -427,6 +439,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminGateRecommendationsRouteImport
       parentRoute: typeof AdminGateRoute
     }
+    '/admin/_gate/security': {
+      id: '/admin/_gate/security'
+      path: '/security'
+      fullPath: '/admin/security'
+      preLoaderRoute: typeof AdminGateSecurityRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
     '/admin/_gate/seo': {
       id: '/admin/_gate/seo'
       path: '/seo'
@@ -473,6 +492,7 @@ interface AdminGateRouteChildren {
   AdminGateProfileRoute: typeof AdminGateProfileRoute
   AdminGateProjectsRoute: typeof AdminGateProjectsRoute
   AdminGateRecommendationsRoute: typeof AdminGateRecommendationsRoute
+  AdminGateSecurityRoute: typeof AdminGateSecurityRoute
   AdminGateSeoRoute: typeof AdminGateSeoRoute
   AdminGateSettingsRoute: typeof AdminGateSettingsRoute
   AdminGateSkillsRoute: typeof AdminGateSkillsRoute
@@ -494,6 +514,7 @@ const AdminGateRouteChildren: AdminGateRouteChildren = {
   AdminGateProfileRoute: AdminGateProfileRoute,
   AdminGateProjectsRoute: AdminGateProjectsRoute,
   AdminGateRecommendationsRoute: AdminGateRecommendationsRoute,
+  AdminGateSecurityRoute: AdminGateSecurityRoute,
   AdminGateSeoRoute: AdminGateSeoRoute,
   AdminGateSettingsRoute: AdminGateSettingsRoute,
   AdminGateSkillsRoute: AdminGateSkillsRoute,
