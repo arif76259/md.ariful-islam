@@ -224,6 +224,45 @@ export type Database = {
         }
         Relationships: []
       }
+      education: {
+        Row: {
+          achievements: string[]
+          created_at: string
+          degree: string
+          description: string
+          field: string
+          id: string
+          institution: string
+          period: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          achievements?: string[]
+          created_at?: string
+          degree: string
+          description?: string
+          field?: string
+          id?: string
+          institution?: string
+          period?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          achievements?: string[]
+          created_at?: string
+          degree?: string
+          description?: string
+          field?: string
+          id?: string
+          institution?: string
+          period?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       experiences: {
         Row: {
           category: string

@@ -64,6 +64,13 @@
       "when": 1790600928042,
       "tag": "0008_create_articles",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1791204577839,
+      "tag": "0009_education_resume_mfa",
+      "breakpoints": true
     }
   ]
 }
