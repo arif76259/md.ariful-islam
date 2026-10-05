@@ -11,6 +11,7 @@ import {
   About,
   AmbassadorSection,
   CommunitySection,
+  EducationSection,
   DigitalOps,
   EventsSection,
   ExperienceSection,
@@ -56,6 +57,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   const profile = useQuery(queries.profile);
   const experiences = useQuery(queries.experiences);
+  const education = useQuery(queries.education);
   const ambassadors = useQuery(queries.ambassadors);
   const projects = useQuery(queries.projects);
   const skills = useQuery(queries.skills);
@@ -101,6 +103,7 @@ function Index() {
       <main>
         <Hero profile={p} />
         <About profile={p} />
+        <EducationSection items={education.data ?? []} />
         <ExperienceSection items={experiences.data ?? []} />
         <EventsSection items={experiences.data ?? []} />
         <AmbassadorSection items={ambassadors.data ?? []} />
