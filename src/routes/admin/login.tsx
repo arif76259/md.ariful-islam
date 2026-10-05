@@ -148,7 +148,6 @@ function AdminLogin() {
               Use a different account
             </button>
           </form>
-        )}
         ) : (
         <form
           onSubmit={submit}
@@ -196,6 +195,7 @@ function AdminLogin() {
           </Button>
 
         </form>
+        )}
 
         <p className="mt-6 text-center text-xs text-muted-foreground">
           <a href="/" className="hover:text-foreground">
