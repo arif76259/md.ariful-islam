@@ -11,6 +11,8 @@ import {
   CalendarDays,
   ExternalLink,
   Gauge,
+  GraduationCap,
+  ShieldCheck,
   Images,
   LayoutDashboard,
   LogOut,
@@ -33,6 +35,7 @@ const NAV = [
   { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { to: "/admin/profile", label: "Profile", icon: User },
+  { to: "/admin/education", label: "Education", icon: GraduationCap },
   { to: "/admin/experience", label: "Experience", icon: Briefcase },
   { to: "/admin/events", label: "Events", icon: CalendarDays },
   { to: "/admin/ambassadors", label: "Ambassadors", icon: Users },
@@ -47,6 +50,7 @@ const NAV = [
   { to: "/admin/appearance", label: "Appearance", icon: Palette },
   { to: "/admin/seo", label: "SEO", icon: Search },
   { to: "/admin/team", label: "Team", icon: Users },
+  { to: "/admin/security", label: "Security (2FA)", icon: ShieldCheck },
   { to: "/admin/settings", label: "Settings", icon: Settings },
 ] as const;
 

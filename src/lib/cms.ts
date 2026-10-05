@@ -12,6 +12,7 @@ export type SocialLink = Tables<"social_links">;
 export type MediaItem = Tables<"media">;
 export type SiteSettings = Tables<"site_settings">;
 export type Recommendation = Tables<"recommendations">;
+export type Education = Tables<"education">;
 
 async function one<T>(table: string) {
   const { data, error } = await supabase.from(table as never).select("*").limit(1);
@@ -65,6 +66,7 @@ export const cms = {
 export const queries = {
   articles: { queryKey: ["public_articles"], queryFn: cms.articles },
   profile: { queryKey: ["profile"], queryFn: cms.profile },
+  education: { queryKey: ["education"], queryFn: () => many<Education>("education") },
   settings: { queryKey: ["site_settings"], queryFn: cms.settings },
   experiences: { queryKey: ["experiences"], queryFn: cms.experiences },
   ambassadors: { queryKey: ["ambassadors"], queryFn: cms.ambassadors },
