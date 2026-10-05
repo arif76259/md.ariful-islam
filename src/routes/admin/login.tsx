@@ -32,6 +32,8 @@ function AdminLogin() {
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [mfaFactor, setMfaFactor] = useState<string | null>(null);
+  const [otp, setOtp] = useState("");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -54,6 +56,40 @@ function AdminLogin() {
       });
       if (signInError) throw signInError;
 
+      const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+      if (aal && aal.nextLevel === "aal2" && aal.currentLevel !== "aal2") {
+        const { data: f } = await supabase.auth.mfa.listFactors();
+        const factor = f?.totp.find((x) => x.status === "verified");
+        if (factor) {
+          setMfaFactor(factor.id);
+          return;
+        }
+      }
+      await finish();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Sign in failed");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function verifyOtp(e: React.FormEvent) {
+    e.preventDefault();
+    if (!mfaFactor) return;
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.mfa.challengeAndVerify({ factorId: mfaFactor, code: otp.trim() });
+      if (error) throw new Error("Wrong or expired code. Try again.");
+      await finish();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Verification failed");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function finish() {
+    {
       const { data: isAdmin, error: roleError } = await supabase.rpc("is_admin");
       if (roleError) throw roleError;
       if (!isAdmin) {
@@ -63,10 +99,6 @@ function AdminLogin() {
       if (!remember) sessionStorage.setItem("admin-session-only", "1");
       toast.success("Welcome back, Ariful.");
       navigate({ to: "/admin/dashboard", replace: true });
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Sign in failed");
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -82,6 +114,41 @@ function AdminLogin() {
           <p className="label-mono mt-2 text-muted-foreground">Portfolio Admin</p>
         </div>
 
+        {mfaFactor ? (
+          <form
+            onSubmit={verifyOtp}
+            className="accent-ring space-y-5 rounded-3xl border border-border bg-surface-2/70 p-8 backdrop-blur-xl"
+          >
+            <div className="space-y-2">
+              <Label htmlFor="otp">6-digit code from your authenticator app</Label>
+              <Input
+                id="otp"
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                autoFocus
+                maxLength={6}
+                value={otp}
+                onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+                placeholder="123456"
+              />
+            </div>
+            <Button type="submit" className="w-full" disabled={loading || otp.length !== 6}>
+              {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+              Verify
+            </Button>
+            <button
+              type="button"
+              className="w-full text-xs text-muted-foreground hover:text-foreground"
+              onClick={async () => {
+                await supabase.auth.signOut();
+                setMfaFactor(null);
+                setOtp("");
+              }}
+            >
+              Use a different account
+            </button>
+          </form>
+        ) : (
         <form
           onSubmit={submit}
           className="accent-ring space-y-5 rounded-3xl border border-border bg-surface-2/70 p-8 backdrop-blur-xl"
@@ -128,6 +195,7 @@ function AdminLogin() {
           </Button>
 
         </form>
+        )}
 
         <p className="mt-6 text-center text-xs text-muted-foreground">
           <a href="/" className="hover:text-foreground">

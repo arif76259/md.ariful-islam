@@ -19,6 +19,7 @@ import { Route as AdminGateAppearanceRouteImport } from './routes/admin/_gate/ap
 import { Route as AdminGateArticlesRouteImport } from './routes/admin/_gate/articles'
 import { Route as AdminGateCommunityRouteImport } from './routes/admin/_gate/community'
 import { Route as AdminGateDashboardRouteImport } from './routes/admin/_gate/dashboard'
+import { Route as AdminGateEducationRouteImport } from './routes/admin/_gate/education'
 import { Route as AdminGateEventsRouteImport } from './routes/admin/_gate/events'
 import { Route as AdminGateExperienceRouteImport } from './routes/admin/_gate/experience'
 import { Route as AdminGateMediaRouteImport } from './routes/admin/_gate/media'
@@ -26,6 +27,7 @@ import { Route as AdminGateMessagesRouteImport } from './routes/admin/_gate/mess
 import { Route as AdminGateProfileRouteImport } from './routes/admin/_gate/profile'
 import { Route as AdminGateProjectsRouteImport } from './routes/admin/_gate/projects'
 import { Route as AdminGateRecommendationsRouteImport } from './routes/admin/_gate/recommendations'
+import { Route as AdminGateSecurityRouteImport } from './routes/admin/_gate/security'
 import { Route as AdminGateSeoRouteImport } from './routes/admin/_gate/seo'
 import { Route as AdminGateSettingsRouteImport } from './routes/admin/_gate/settings'
 import { Route as AdminGateSkillsRouteImport } from './routes/admin/_gate/skills'
@@ -81,6 +83,11 @@ const AdminGateDashboardRoute = AdminGateDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AdminGateRoute,
 } as any)
+const AdminGateEducationRoute = AdminGateEducationRouteImport.update({
+  id: '/education',
+  path: '/education',
+  getParentRoute: () => AdminGateRoute,
+} as any)
 const AdminGateEventsRoute = AdminGateEventsRouteImport.update({
   id: '/events',
   path: '/events',
@@ -117,6 +124,11 @@ const AdminGateRecommendationsRoute =
     path: '/recommendations',
     getParentRoute: () => AdminGateRoute,
   } as any)
+const AdminGateSecurityRoute = AdminGateSecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
+  getParentRoute: () => AdminGateRoute,
+} as any)
 const AdminGateSeoRoute = AdminGateSeoRouteImport.update({
   id: '/seo',
   path: '/seo',
@@ -149,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/admin/articles': typeof AdminGateArticlesRoute
   '/admin/community': typeof AdminGateCommunityRoute
   '/admin/dashboard': typeof AdminGateDashboardRoute
+  '/admin/education': typeof AdminGateEducationRoute
   '/admin/events': typeof AdminGateEventsRoute
   '/admin/experience': typeof AdminGateExperienceRoute
   '/admin/media': typeof AdminGateMediaRoute
@@ -156,6 +169,7 @@ export interface FileRoutesByFullPath {
   '/admin/profile': typeof AdminGateProfileRoute
   '/admin/projects': typeof AdminGateProjectsRoute
   '/admin/recommendations': typeof AdminGateRecommendationsRoute
+  '/admin/security': typeof AdminGateSecurityRoute
   '/admin/seo': typeof AdminGateSeoRoute
   '/admin/settings': typeof AdminGateSettingsRoute
   '/admin/skills': typeof AdminGateSkillsRoute
@@ -172,6 +186,7 @@ export interface FileRoutesByTo {
   '/admin/articles': typeof AdminGateArticlesRoute
   '/admin/community': typeof AdminGateCommunityRoute
   '/admin/dashboard': typeof AdminGateDashboardRoute
+  '/admin/education': typeof AdminGateEducationRoute
   '/admin/events': typeof AdminGateEventsRoute
   '/admin/experience': typeof AdminGateExperienceRoute
   '/admin/media': typeof AdminGateMediaRoute
@@ -179,6 +194,7 @@ export interface FileRoutesByTo {
   '/admin/profile': typeof AdminGateProfileRoute
   '/admin/projects': typeof AdminGateProjectsRoute
   '/admin/recommendations': typeof AdminGateRecommendationsRoute
+  '/admin/security': typeof AdminGateSecurityRoute
   '/admin/seo': typeof AdminGateSeoRoute
   '/admin/settings': typeof AdminGateSettingsRoute
   '/admin/skills': typeof AdminGateSkillsRoute
@@ -196,6 +212,7 @@ export interface FileRoutesById {
   '/admin/_gate/articles': typeof AdminGateArticlesRoute
   '/admin/_gate/community': typeof AdminGateCommunityRoute
   '/admin/_gate/dashboard': typeof AdminGateDashboardRoute
+  '/admin/_gate/education': typeof AdminGateEducationRoute
   '/admin/_gate/events': typeof AdminGateEventsRoute
   '/admin/_gate/experience': typeof AdminGateExperienceRoute
   '/admin/_gate/media': typeof AdminGateMediaRoute
@@ -203,6 +220,7 @@ export interface FileRoutesById {
   '/admin/_gate/profile': typeof AdminGateProfileRoute
   '/admin/_gate/projects': typeof AdminGateProjectsRoute
   '/admin/_gate/recommendations': typeof AdminGateRecommendationsRoute
+  '/admin/_gate/security': typeof AdminGateSecurityRoute
   '/admin/_gate/seo': typeof AdminGateSeoRoute
   '/admin/_gate/settings': typeof AdminGateSettingsRoute
   '/admin/_gate/skills': typeof AdminGateSkillsRoute
@@ -221,6 +239,7 @@ export interface FileRouteTypes {
     | '/admin/articles'
     | '/admin/community'
     | '/admin/dashboard'
+    | '/admin/education'
     | '/admin/events'
     | '/admin/experience'
     | '/admin/media'
@@ -228,6 +247,7 @@ export interface FileRouteTypes {
     | '/admin/profile'
     | '/admin/projects'
     | '/admin/recommendations'
+    | '/admin/security'
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/skills'
@@ -244,6 +264,7 @@ export interface FileRouteTypes {
     | '/admin/articles'
     | '/admin/community'
     | '/admin/dashboard'
+    | '/admin/education'
     | '/admin/events'
     | '/admin/experience'
     | '/admin/media'
@@ -251,6 +272,7 @@ export interface FileRouteTypes {
     | '/admin/profile'
     | '/admin/projects'
     | '/admin/recommendations'
+    | '/admin/security'
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/skills'
@@ -267,6 +289,7 @@ export interface FileRouteTypes {
     | '/admin/_gate/articles'
     | '/admin/_gate/community'
     | '/admin/_gate/dashboard'
+    | '/admin/_gate/education'
     | '/admin/_gate/events'
     | '/admin/_gate/experience'
     | '/admin/_gate/media'
@@ -274,6 +297,7 @@ export interface FileRouteTypes {
     | '/admin/_gate/profile'
     | '/admin/_gate/projects'
     | '/admin/_gate/recommendations'
+    | '/admin/_gate/security'
     | '/admin/_gate/seo'
     | '/admin/_gate/settings'
     | '/admin/_gate/skills'
@@ -359,6 +383,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminGateDashboardRouteImport
       parentRoute: typeof AdminGateRoute
     }
+    '/admin/_gate/education': {
+      id: '/admin/_gate/education'
+      path: '/education'
+      fullPath: '/admin/education'
+      preLoaderRoute: typeof AdminGateEducationRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
     '/admin/_gate/events': {
       id: '/admin/_gate/events'
       path: '/events'
@@ -408,6 +439,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminGateRecommendationsRouteImport
       parentRoute: typeof AdminGateRoute
     }
+    '/admin/_gate/security': {
+      id: '/admin/_gate/security'
+      path: '/security'
+      fullPath: '/admin/security'
+      preLoaderRoute: typeof AdminGateSecurityRouteImport
+      parentRoute: typeof AdminGateRoute
+    }
     '/admin/_gate/seo': {
       id: '/admin/_gate/seo'
       path: '/seo'
@@ -446,6 +484,7 @@ interface AdminGateRouteChildren {
   AdminGateArticlesRoute: typeof AdminGateArticlesRoute
   AdminGateCommunityRoute: typeof AdminGateCommunityRoute
   AdminGateDashboardRoute: typeof AdminGateDashboardRoute
+  AdminGateEducationRoute: typeof AdminGateEducationRoute
   AdminGateEventsRoute: typeof AdminGateEventsRoute
   AdminGateExperienceRoute: typeof AdminGateExperienceRoute
   AdminGateMediaRoute: typeof AdminGateMediaRoute
@@ -453,6 +492,7 @@ interface AdminGateRouteChildren {
   AdminGateProfileRoute: typeof AdminGateProfileRoute
   AdminGateProjectsRoute: typeof AdminGateProjectsRoute
   AdminGateRecommendationsRoute: typeof AdminGateRecommendationsRoute
+  AdminGateSecurityRoute: typeof AdminGateSecurityRoute
   AdminGateSeoRoute: typeof AdminGateSeoRoute
   AdminGateSettingsRoute: typeof AdminGateSettingsRoute
   AdminGateSkillsRoute: typeof AdminGateSkillsRoute
@@ -466,6 +506,7 @@ const AdminGateRouteChildren: AdminGateRouteChildren = {
   AdminGateArticlesRoute: AdminGateArticlesRoute,
   AdminGateCommunityRoute: AdminGateCommunityRoute,
   AdminGateDashboardRoute: AdminGateDashboardRoute,
+  AdminGateEducationRoute: AdminGateEducationRoute,
   AdminGateEventsRoute: AdminGateEventsRoute,
   AdminGateExperienceRoute: AdminGateExperienceRoute,
   AdminGateMediaRoute: AdminGateMediaRoute,
@@ -473,6 +514,7 @@ const AdminGateRouteChildren: AdminGateRouteChildren = {
   AdminGateProfileRoute: AdminGateProfileRoute,
   AdminGateProjectsRoute: AdminGateProjectsRoute,
   AdminGateRecommendationsRoute: AdminGateRecommendationsRoute,
+  AdminGateSecurityRoute: AdminGateSecurityRoute,
   AdminGateSeoRoute: AdminGateSeoRoute,
   AdminGateSettingsRoute: AdminGateSettingsRoute,
   AdminGateSkillsRoute: AdminGateSkillsRoute,

@@ -3,6 +3,8 @@ import {
   ArrowRight,
   ArrowUpRight,
   Check,
+  Download,
+  GraduationCap,
   Linkedin,
   Mail,
   MapPin,
@@ -16,6 +18,7 @@ import type {
   Ambassador,
   CaseStep,
   CommunityImpact,
+  Education,
   Experience,
   Profile,
   Project,
@@ -92,6 +95,13 @@ export function Hero({ profile }: { profile: Profile }) {
             <Button asChild size="lg" variant="outline">
               <a href="#contact">Let&apos;s Connect</a>
             </Button>
+            {profile.resume_url && (
+              <Button asChild size="lg" variant="outline">
+                <a href={profile.resume_url} target="_blank" rel="noreferrer">
+                  <Download className="h-4 w-4" /> Resume
+                </a>
+              </Button>
+            )}
             {profile.linkedin && (
               <Button asChild size="lg" variant="ghost">
                 <a href={profile.linkedin} target="_blank" rel="noreferrer">
@@ -170,6 +180,56 @@ export function About({ profile }: { profile: Profile }) {
             ))}
           </div>
         </Reveal>
+      </div>
+    </Section>
+  );
+}
+
+/* -------------------------------- Education -------------------------------- */
+
+export function EducationSection({ items }: { items: Education[] }) {
+  if (items.length === 0) return null;
+  return (
+    <Section id="education">
+      <Reveal>
+        <SectionLabel index="01.5">Education & Qualifications</SectionLabel>
+        <h2 className="font-display mt-6 max-w-3xl text-[clamp(2rem,4.5vw,3.4rem)] leading-tight font-bold">
+          Where the <span className="text-gradient">learning</span> happens.
+        </h2>
+      </Reveal>
+      <div className="mt-14 grid gap-5 md:grid-cols-2">
+        {items.map((e, i) => (
+          <Reveal key={e.id} delay={i * 0.05}>
+            <div className="h-full rounded-3xl border border-border bg-surface-2/50 p-8 transition-colors hover:border-[color:var(--accent)]/45">
+              <div className="flex items-start justify-between gap-4">
+                <GraduationCap className="h-6 w-6 text-[color:var(--accent)]" />
+                {e.period && (
+                  <span className="label-mono rounded-full border border-border px-3 py-1.5 text-muted-foreground">
+                    {e.period}
+                  </span>
+                )}
+              </div>
+              <h3 className="font-display mt-5 text-2xl font-bold tracking-tight">{e.degree}</h3>
+              {e.institution && <p className="mt-1 text-sm text-muted-foreground">{e.institution}</p>}
+              {e.field && (
+                <p className="label-mono mt-3 text-[color:var(--accent)]">{e.field}</p>
+              )}
+              {e.description && (
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{e.description}</p>
+              )}
+              {e.achievements.length > 0 && (
+                <ul className="mt-5 space-y-2">
+                  {e.achievements.map((a) => (
+                    <li key={a} className="flex gap-2 text-sm text-muted-foreground">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--accent)]" />
+                      <span>{a}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </Reveal>
+        ))}
       </div>
     </Section>
   );

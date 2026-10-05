@@ -12,6 +12,7 @@ const WORK_LINKS = [
 const LINKS = [
   ["Home", "#home"],
   ["About", "#about"],
+  ["Education", "#education"],
   ["Skills", "#skills"],
   ["Recommendations", "#recommendations"],
   ["Contact", "#contact"],

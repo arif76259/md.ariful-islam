@@ -28,6 +28,7 @@ const TEXT_FIELDS: Array<[keyof Profile, string, number]> = [
   ["current_role_title", "Current role", 200],
   ["focus", "Focus", 200],
   ["linkedin", "LinkedIn URL", 300],
+  ["resume_url", "Resume / CV link (e.g. Google Drive PDF link — leave empty to hide the button)", 500],
 ];
 
 function ProfileAdmin() {
