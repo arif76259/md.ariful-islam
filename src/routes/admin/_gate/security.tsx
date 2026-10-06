@@ -71,7 +71,10 @@ function SecurityAdmin() {
   async function remove(id: string) {
     if (!confirm("Turn off 2FA for your account?")) return;
     const { error } = await supabase.auth.mfa.unenroll({ factorId: id });
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("2FA turned off");
     qc.invalidateQueries({ queryKey: ["mfa_factors"] });
   }
