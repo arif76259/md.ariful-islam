@@ -192,7 +192,7 @@ export function EducationSection({ items }: { items: Education[] }) {
   return (
     <Section id="education">
       <Reveal>
-        <SectionLabel index="01.5">Education & Qualifications</SectionLabel>
+        <SectionLabel index="01">Education & Qualifications</SectionLabel>
         <h2 className="font-display mt-6 max-w-3xl text-[clamp(2rem,4.5vw,3.4rem)] leading-tight font-bold">
           Where the <span className="text-gradient">learning</span> happens.
         </h2>

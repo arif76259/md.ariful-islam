@@ -5,7 +5,8 @@
 - [x] Social share previews
 - [ ] Contact email alerts — needs a custom email domain
 - [x] Case studies / insights section
-- [ ] 2FA (authenticator app)
+- [x] 2FA (authenticator app)
 - [ ] Draft / preview / publish workflow
 - [x] Hero right-side dead space fixed (photo fills its column)
 - [x] AI polish: rough notes → polished portfolio entry (Lovable AI Gateway)
+- [x] Education section + Resume button
