@@ -65,23 +65,21 @@ export async function answerPortfolioQuestion(history: QaTurn[]) {
     headers: { "Lovable-API-Key": apiKey, "X-Lovable-AIG-SDK": "vercel-ai-sdk" },
     fetch: runIdFetch.fetch,
   });
-  const messages: ModelMessage[] = [
-    {
-      role: "system",
-      content: [
+  const instructions = [
         "You are the portfolio assistant on Md. Ariful Islam's personal website. Answer visitor questions about his education, experience, events, ambassador roles, projects, skills and community work.",
         "Use ONLY the published portfolio data below. If the answer is not in the data, say you don't have that information and suggest using the Contact section. Never invent facts, numbers, dates, employers or achievements. Present student experience honestly; do not inflate it into corporate experience. Project statuses must match the data exactly.",
         "Refer to him in third person. Reply in the visitor's language (Bengali or English). Keep answers concise: at most ~120 words, plain text, short lists allowed. Politely decline unrelated requests.",
         "PORTFOLIO DATA (JSON):",
         context,
-      ].join("\n"),
-    },
+      ].join("\n");
+  const messages: ModelMessage[] = [
     ...history.map((m) => ({ role: m.role, content: m.content }) as ModelMessage),
   ];
   let lastError: unknown;
   const result = streamText({
     model: provider.responses("openai/gpt-6-astra"),
     onError: ({ error }) => { lastError = error; },
+    instructions,
     messages,
     providerOptions: {
       openai: {
