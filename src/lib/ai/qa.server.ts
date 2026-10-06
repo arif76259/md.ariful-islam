@@ -78,8 +78,10 @@ export async function answerPortfolioQuestion(history: QaTurn[]) {
     },
     ...history.map((m) => ({ role: m.role, content: m.content }) as ModelMessage),
   ];
+  let lastError: unknown;
   const result = streamText({
     model: provider.responses("openai/gpt-6-astra"),
+    onError: ({ error }) => { lastError = error; },
     messages,
     providerOptions: {
       openai: {
@@ -91,5 +93,10 @@ export async function answerPortfolioQuestion(history: QaTurn[]) {
       },
     },
   });
-  return (await result.text).trim();
+  try {
+    return (await result.text).trim();
+  } catch (e) {
+    console.error("qa stream error", lastError);
+    throw lastError ?? e;
+  }
 }
