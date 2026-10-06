@@ -4,6 +4,7 @@ import { queries } from "@/lib/cms";
 import { getPublicSeo } from "@/lib/team.functions";
 import { SiteNav } from "@/components/site/SiteNav";
 import { PageviewTracker } from "@/components/site/PageviewTracker";
+import { PortfolioAssistant } from "@/components/site/PortfolioAssistant";
 import { RecommendationsSection } from "@/components/site/Recommendations";
 import { InsightsSection } from "@/components/site/Insights";
 import { ContactHub } from "@/components/site/ContactHub";
@@ -118,6 +119,7 @@ function Index() {
       <SiteFooter profile={p} social={social.data ?? []} />
 
       <PageviewTracker />
+      <PortfolioAssistant />
     </>
   );
 }
