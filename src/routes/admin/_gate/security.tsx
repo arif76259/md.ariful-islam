@@ -57,12 +57,31 @@ function SecurityAdmin() {
         code: code.trim(),
       });
       if (error) throw error;
-      toast.success("2FA is on. You'll need the code every time you log in.");
+      const { data: codes, error: codesError } = await supabase.rpc("generate_backup_codes");
+      if (codesError) throw codesError;
+      setBackupCodes((codes ?? []).map((r: { code: string }) => r.code));
+      toast.success("2FA is on. Save your backup codes now.");
       setEnroll(null);
       setCode("");
       qc.invalidateQueries({ queryKey: ["mfa_factors"] });
+      qc.invalidateQueries({ queryKey: ["backup_code_count"] });
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Wrong code");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function regenerateCodes() {
+    if (!confirm("Replace all existing backup codes with 8 new ones?")) return;
+    setBusy(true);
+    try {
+      const { data: codes, error } = await supabase.rpc("generate_backup_codes");
+      if (error) throw error;
+      setBackupCodes((codes ?? []).map((r: { code: string }) => r.code));
+      qc.invalidateQueries({ queryKey: ["backup_code_count"] });
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not generate codes");
     } finally {
       setBusy(false);
     }
