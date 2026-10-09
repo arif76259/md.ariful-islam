@@ -131,6 +131,16 @@ function SecurityAdmin() {
                 </Button>
               </div>
             ))}
+            <div className="space-y-2 rounded-xl border border-border p-4">
+              <p className="text-sm font-medium">Backup codes</p>
+              <p className="text-xs text-muted-foreground">
+                If you lose your phone, a backup code lets you back in and resets 2FA so you can set it up again.
+                You have {backupCount.data ?? 0} unused code{(backupCount.data ?? 0) === 1 ? "" : "s"} left.
+              </p>
+              <Button variant="outline" size="sm" onClick={regenerateCodes} disabled={busy}>
+                {busy && <Loader2 className="h-4 w-4 animate-spin" />} Generate new codes
+              </Button>
+            </div>
           </div>
         ) : enroll ? (
           <div className="space-y-4">
