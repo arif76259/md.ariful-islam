@@ -78,8 +78,15 @@ function AdminLogin() {
     if (!mfaFactor) return;
     setLoading(true);
     try {
-      const { error } = await supabase.auth.mfa.challengeAndVerify({ factorId: mfaFactor, code: otp.trim() });
-      if (error) throw new Error("Wrong or expired code. Try again.");
+      if (useBackup) {
+        const { data: ok, error } = await supabase.rpc("redeem_backup_code", { _code: otp.trim() });
+        if (error) throw error;
+        if (!ok) throw new Error("Invalid or already-used backup code.");
+        toast.success("Backup code accepted. 2FA was reset — set it up again from Security after logging in.");
+      } else {
+        const { error } = await supabase.auth.mfa.challengeAndVerify({ factorId: mfaFactor, code: otp.trim() });
+        if (error) throw new Error("Wrong or expired code. Try again.");
+      }
       await finish();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Verification failed");
