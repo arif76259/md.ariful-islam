@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Loader2, ShieldCheck, Trash2 } from "lucide-react";
+import { Copy, Loader2, ShieldCheck, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { PageHeader } from "@/components/admin/AdminShell";
 import { Button } from "@/components/ui/button";
@@ -23,9 +23,18 @@ function SecurityAdmin() {
       return data.totp.filter((f) => f.status === "verified");
     },
   });
+  const backupCount = useQuery({
+    queryKey: ["backup_code_count"],
+    queryFn: async () => {
+      const { data, error } = await supabase.rpc("count_backup_codes");
+      if (error) throw error;
+      return data as number;
+    },
+  });
   const [enroll, setEnroll] = useState<{ id: string; qr: string; secret: string } | null>(null);
   const [code, setCode] = useState("");
   const [busy, setBusy] = useState(false);
+  const [backupCodes, setBackupCodes] = useState<string[] | null>(null);
 
   async function start() {
     setBusy(true);
@@ -57,12 +66,31 @@ function SecurityAdmin() {
         code: code.trim(),
       });
       if (error) throw error;
-      toast.success("2FA is on. You'll need the code every time you log in.");
+      const { data: codes, error: codesError } = await supabase.rpc("generate_backup_codes");
+      if (codesError) throw codesError;
+      setBackupCodes((codes ?? []).map((r: { code: string }) => r.code));
+      toast.success("2FA is on. Save your backup codes now.");
       setEnroll(null);
       setCode("");
       qc.invalidateQueries({ queryKey: ["mfa_factors"] });
+      qc.invalidateQueries({ queryKey: ["backup_code_count"] });
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Wrong code");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function regenerateCodes() {
+    if (!confirm("Replace all existing backup codes with 8 new ones?")) return;
+    setBusy(true);
+    try {
+      const { data: codes, error } = await supabase.rpc("generate_backup_codes");
+      if (error) throw error;
+      setBackupCodes((codes ?? []).map((r: { code: string }) => r.code));
+      qc.invalidateQueries({ queryKey: ["backup_code_count"] });
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not generate codes");
     } finally {
       setBusy(false);
     }
@@ -103,6 +131,16 @@ function SecurityAdmin() {
                 </Button>
               </div>
             ))}
+            <div className="space-y-2 rounded-xl border border-border p-4">
+              <p className="text-sm font-medium">Backup codes</p>
+              <p className="text-xs text-muted-foreground">
+                If you lose your phone, a backup code lets you back in and resets 2FA so you can set it up again.
+                You have {backupCount.data ?? 0} unused code{(backupCount.data ?? 0) === 1 ? "" : "s"} left.
+              </p>
+              <Button variant="outline" size="sm" onClick={regenerateCodes} disabled={busy}>
+                {busy && <Loader2 className="h-4 w-4 animate-spin" />} Generate new codes
+              </Button>
+            </div>
           </div>
         ) : enroll ? (
           <div className="space-y-4">
@@ -133,6 +171,34 @@ function SecurityAdmin() {
             <Button onClick={start} disabled={busy}>
               {busy && <Loader2 className="h-4 w-4 animate-spin" />} Set up 2FA
             </Button>
+          </div>
+        )}
+        {backupCodes && (
+          <div className="space-y-3 rounded-xl border border-[color:var(--accent)]/40 bg-[color:var(--accent)]/5 p-4">
+            <p className="text-sm font-medium">Save these backup codes now</p>
+            <p className="text-xs text-muted-foreground">
+              Each code works once. They are shown only now — store them somewhere safe (not on your phone).
+            </p>
+            <div className="grid grid-cols-2 gap-2 font-mono text-sm">
+              {backupCodes.map((c) => (
+                <span key={c} className="rounded-lg border border-border px-3 py-1.5 text-center">{c}</span>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  navigator.clipboard.writeText(backupCodes.join("\n"));
+                  toast.success("Copied");
+                }}
+              >
+                <Copy className="h-4 w-4" /> Copy all
+              </Button>
+              <Button variant="ghost" size="sm" onClick={() => setBackupCodes(null)}>
+                I've saved them
+              </Button>
+            </div>
           </div>
         )}
       </div>

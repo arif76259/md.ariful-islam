@@ -350,6 +350,30 @@ export type Database = {
         }
         Relationships: []
       }
+      mfa_backup_codes: {
+        Row: {
+          code_hash: string
+          created_at: string
+          id: string
+          used_at: string | null
+          user_id: string
+        }
+        Insert: {
+          code_hash: string
+          created_at?: string
+          id?: string
+          used_at?: string | null
+          user_id: string
+        }
+        Update: {
+          code_hash?: string
+          created_at?: string
+          id?: string
+          used_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       pageviews: {
         Row: {
           created_at: string
@@ -686,6 +710,13 @@ export type Database = {
     }
     Functions: {
       claim_admin: { Args: never; Returns: boolean }
+      count_backup_codes: { Args: never; Returns: number }
+      generate_backup_codes: {
+        Args: never
+        Returns: {
+          code: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -703,6 +734,7 @@ export type Database = {
         }[]
       }
       redeem_admin_invite: { Args: { _token: string }; Returns: boolean }
+      redeem_backup_code: { Args: { _code: string }; Returns: boolean }
       revoke_admin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {

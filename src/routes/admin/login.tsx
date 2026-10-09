@@ -34,6 +34,7 @@ function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const [mfaFactor, setMfaFactor] = useState<string | null>(null);
   const [otp, setOtp] = useState("");
+  const [useBackup, setUseBackup] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -78,8 +79,15 @@ function AdminLogin() {
     if (!mfaFactor) return;
     setLoading(true);
     try {
-      const { error } = await supabase.auth.mfa.challengeAndVerify({ factorId: mfaFactor, code: otp.trim() });
-      if (error) throw new Error("Wrong or expired code. Try again.");
+      if (useBackup) {
+        const { data: ok, error } = await supabase.rpc("redeem_backup_code", { _code: otp.trim() });
+        if (error) throw error;
+        if (!ok) throw new Error("Invalid or already-used backup code.");
+        toast.success("Backup code accepted. 2FA was reset — set it up again from Security after logging in.");
+      } else {
+        const { error } = await supabase.auth.mfa.challengeAndVerify({ factorId: mfaFactor, code: otp.trim() });
+        if (error) throw new Error("Wrong or expired code. Try again.");
+      }
       await finish();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Verification failed");
@@ -120,22 +128,40 @@ function AdminLogin() {
             className="accent-ring space-y-5 rounded-3xl border border-border bg-surface-2/70 p-8 backdrop-blur-xl"
           >
             <div className="space-y-2">
-              <Label htmlFor="otp">6-digit code from your authenticator app</Label>
+              <Label htmlFor="otp">
+                {useBackup ? "Backup code (e.g. AB12-CD34)" : "6-digit code from your authenticator app"}
+              </Label>
               <Input
                 id="otp"
-                inputMode="numeric"
+                inputMode={useBackup ? "text" : "numeric"}
                 autoComplete="one-time-code"
                 autoFocus
-                maxLength={6}
+                maxLength={useBackup ? 9 : 6}
                 value={otp}
-                onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
-                placeholder="123456"
+                onChange={(e) =>
+                  setOtp(useBackup ? e.target.value.toUpperCase() : e.target.value.replace(/\D/g, ""))
+                }
+                placeholder={useBackup ? "AB12-CD34" : "123456"}
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading || otp.length !== 6}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading || (useBackup ? otp.trim().length < 9 : otp.length !== 6)}
+            >
               {loading && <Loader2 className="h-4 w-4 animate-spin" />}
               Verify
             </Button>
+            <button
+              type="button"
+              className="w-full text-xs text-muted-foreground hover:text-foreground"
+              onClick={() => {
+                setUseBackup((v) => !v);
+                setOtp("");
+              }}
+            >
+              {useBackup ? "Use authenticator code instead" : "Lost your phone? Use a backup code"}
+            </button>
             <button
               type="button"
               className="w-full text-xs text-muted-foreground hover:text-foreground"
@@ -143,6 +169,7 @@ function AdminLogin() {
                 await supabase.auth.signOut();
                 setMfaFactor(null);
                 setOtp("");
+                setUseBackup(false);
               }}
             >
               Use a different account
