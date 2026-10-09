@@ -23,9 +23,18 @@ function SecurityAdmin() {
       return data.totp.filter((f) => f.status === "verified");
     },
   });
+  const backupCount = useQuery({
+    queryKey: ["backup_code_count"],
+    queryFn: async () => {
+      const { data, error } = await supabase.rpc("count_backup_codes");
+      if (error) throw error;
+      return data as number;
+    },
+  });
   const [enroll, setEnroll] = useState<{ id: string; qr: string; secret: string } | null>(null);
   const [code, setCode] = useState("");
   const [busy, setBusy] = useState(false);
+  const [backupCodes, setBackupCodes] = useState<string[] | null>(null);
 
   async function start() {
     setBusy(true);
