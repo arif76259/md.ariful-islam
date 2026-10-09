@@ -173,6 +173,34 @@ function SecurityAdmin() {
             </Button>
           </div>
         )}
+        {backupCodes && (
+          <div className="space-y-3 rounded-xl border border-[color:var(--accent)]/40 bg-[color:var(--accent)]/5 p-4">
+            <p className="text-sm font-medium">Save these backup codes now</p>
+            <p className="text-xs text-muted-foreground">
+              Each code works once. They are shown only now — store them somewhere safe (not on your phone).
+            </p>
+            <div className="grid grid-cols-2 gap-2 font-mono text-sm">
+              {backupCodes.map((c) => (
+                <span key={c} className="rounded-lg border border-border px-3 py-1.5 text-center">{c}</span>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  navigator.clipboard.writeText(backupCodes.join("\n"));
+                  toast.success("Copied");
+                }}
+              >
+                <Copy className="h-4 w-4" /> Copy all
+              </Button>
+              <Button variant="ghost" size="sm" onClick={() => setBackupCodes(null)}>
+                I've saved them
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
