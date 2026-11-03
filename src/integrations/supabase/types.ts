@@ -53,11 +53,13 @@ export type Database = {
           created_at: string
           description: string
           featured: boolean
+          gallery: string[]
           highlights: string[]
           id: string
           logo_url: string | null
           period: string
           role_title: string
+          slug: string | null
           sort_order: number
           updated_at: string
         }
@@ -66,11 +68,13 @@ export type Database = {
           created_at?: string
           description?: string
           featured?: boolean
+          gallery?: string[]
           highlights?: string[]
           id?: string
           logo_url?: string | null
           period?: string
           role_title?: string
+          slug?: string | null
           sort_order?: number
           updated_at?: string
         }
@@ -79,11 +83,13 @@ export type Database = {
           created_at?: string
           description?: string
           featured?: boolean
+          gallery?: string[]
           highlights?: string[]
           id?: string
           logo_url?: string | null
           period?: string
           role_title?: string
+          slug?: string | null
           sort_order?: number
           updated_at?: string
         }
@@ -99,6 +105,7 @@ export type Database = {
           gallery: string[]
           id: string
           published: boolean
+          slug: string | null
           sort_order: number
           summary: string
           title: string
@@ -113,6 +120,7 @@ export type Database = {
           gallery?: string[]
           id?: string
           published?: boolean
+          slug?: string | null
           sort_order?: number
           summary?: string
           title: string
@@ -127,6 +135,7 @@ export type Database = {
           gallery?: string[]
           id?: string
           published?: boolean
+          slug?: string | null
           sort_order?: number
           summary?: string
           title?: string
@@ -270,12 +279,14 @@ export type Database = {
           description: string
           end_date: string
           featured: boolean
+          gallery: string[]
           id: string
           image_url: string | null
           is_current: boolean
           organization: string
           responsibilities: string[]
           skills: string[]
+          slug: string | null
           sort_order: number
           start_date: string
           title: string
@@ -287,12 +298,14 @@ export type Database = {
           description?: string
           end_date?: string
           featured?: boolean
+          gallery?: string[]
           id?: string
           image_url?: string | null
           is_current?: boolean
           organization?: string
           responsibilities?: string[]
           skills?: string[]
+          slug?: string | null
           sort_order?: number
           start_date?: string
           title: string
@@ -304,12 +317,14 @@ export type Database = {
           description?: string
           end_date?: string
           featured?: boolean
+          gallery?: string[]
           id?: string
           image_url?: string | null
           is_current?: boolean
           organization?: string
           responsibilities?: string[]
           skills?: string[]
+          slug?: string | null
           sort_order?: number
           start_date?: string
           title?: string
@@ -474,6 +489,7 @@ export type Database = {
           github_link: string | null
           id: string
           name: string
+          slug: string | null
           sort_order: number
           status: string
           tagline: string
@@ -492,6 +508,7 @@ export type Database = {
           github_link?: string | null
           id?: string
           name: string
+          slug?: string | null
           sort_order?: number
           status?: string
           tagline?: string
@@ -510,6 +527,7 @@ export type Database = {
           github_link?: string | null
           id?: string
           name?: string
+          slug?: string | null
           sort_order?: number
           status?: string
           tagline?: string
@@ -736,6 +754,7 @@ export type Database = {
       redeem_admin_invite: { Args: { _token: string }; Returns: boolean }
       redeem_backup_code: { Args: { _code: string }; Returns: boolean }
       revoke_admin: { Args: { _user_id: string }; Returns: boolean }
+      slugify: { Args: { input: string }; Returns: string }
     }
     Enums: {
       app_role: "admin"
