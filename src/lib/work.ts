@@ -65,10 +65,13 @@ async function neighbors(
   const list = (data ?? []) as unknown as Array<Record<string, unknown>>;
   const idx = list.findIndex((r) => String(r["slug"] ?? "") === slug);
   if (idx === -1) return { prev: null, next: null };
-  const toNeighbor = (r: Record<string, unknown>): WorkNeighbor => ({
-    slug: String(r["slug"] ?? ""),
-    title: String(r["title"] ?? r["brand"] ?? r["name"] ?? "Untitled"),
-  });
+  const toNeighbor = (r: Record<string, unknown> | undefined): WorkNeighbor | null => {
+    if (!r) return null;
+    return {
+      slug: String(r["slug"] ?? ""),
+      title: String(r["title"] ?? r["brand"] ?? r["name"] ?? "Untitled"),
+    };
+  };
   return {
     prev: idx > 0 ? toNeighbor(list[idx - 1]) : null,
     next: idx < list.length - 1 ? toNeighbor(list[idx + 1]) : null,
