@@ -16,6 +16,7 @@ function ProjectsAdmin() {
       subtitleKey="status"
       fields={[
         { key: "name", label: "Name", type: "text", required: true, max: 100 },
+        { key: "slug", label: "Page link", type: "text", max: 100, placeholder: "Auto-created from name", help: "Your page will be /work/your-link. Leave blank to create it from the project name." },
         { key: "tagline", label: "Tagline", type: "text", max: 140 },
         { key: "description", label: "Description", type: "textarea", max: 1500 },
         {
@@ -27,7 +28,7 @@ function ProjectsAdmin() {
         },
         { key: "category", label: "Category", type: "text", max: 60 },
         { key: "cover_url", label: "Cover image", type: "image" },
-        { key: "gallery", label: "Gallery image URLs", type: "list" },
+        { key: "gallery", label: "Photo gallery", type: "gallery" },
         { key: "features", label: "Features", type: "list" },
         { key: "tools", label: "Tools / technologies", type: "list" },
         { key: "external_link", label: "External link", type: "text", max: 300 },

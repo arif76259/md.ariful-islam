@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -242,7 +243,20 @@ function ExperienceCard({ item }: { item: Experience }) {
     .filter(Boolean)
     .join(" – ");
   return (
-    <div className="group relative rounded-2xl border border-border bg-surface-2/50 p-6 transition-all hover:border-[color:var(--accent)]/45 hover:bg-surface-3/60">
+    <Link
+      to="/work/$slug"
+      params={{ slug: item.slug ?? "" }}
+      className="group relative block rounded-2xl border border-border bg-surface-2/50 p-6 transition-all hover:border-[color:var(--accent)]/45 hover:bg-surface-3/60"
+      aria-label={`View details for ${item.title}`}
+    >
+      {item.image_url && (
+        <img
+          src={item.image_url}
+          alt={item.title}
+          loading="lazy"
+          className="mb-5 aspect-[16/7] w-full rounded-xl border border-border object-cover"
+        />
+      )}
       <div className="flex flex-wrap items-center justify-between gap-2">
         <span className="label-mono text-[color:var(--accent)]">{item.category}</span>
         <span className="label-mono text-muted-foreground">{period}</span>
@@ -274,7 +288,10 @@ function ExperienceCard({ item }: { item: Experience }) {
           ))}
         </div>
       )}
-    </div>
+      <span className="label-mono mt-5 inline-flex items-center gap-1 text-muted-foreground transition-colors group-hover:text-foreground">
+        View details <ArrowUpRight className="h-3.5 w-3.5" />
+      </span>
+    </Link>
   );
 }
 
@@ -336,7 +353,20 @@ export function AmbassadorSection({ items }: { items: Ambassador[] }) {
       <div className="mt-14 grid gap-5 lg:grid-cols-2">
         {items.map((a, i) => (
           <Reveal key={a.id} delay={i * 0.06}>
-            <div className="h-full rounded-3xl border border-border bg-surface-2/50 p-8 transition-colors hover:border-[color:var(--accent)]/45">
+            <Link
+              to="/work/$slug"
+              params={{ slug: a.slug ?? "" }}
+              aria-label={`View details for ${a.brand}`}
+              className="group block h-full rounded-3xl border border-border bg-surface-2/50 p-8 transition-colors hover:border-[color:var(--accent)]/45"
+            >
+              {a.logo_url && (
+                <img
+                  src={a.logo_url}
+                  alt={a.brand}
+                  loading="lazy"
+                  className="mb-5 aspect-[16/7] w-full rounded-xl border border-border object-cover"
+                />
+              )}
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h3 className="font-display text-2xl font-bold tracking-tight">{a.brand}</h3>
@@ -357,7 +387,10 @@ export function AmbassadorSection({ items }: { items: Ambassador[] }) {
                   </li>
                 ))}
               </ul>
-            </div>
+              <span className="label-mono mt-5 inline-flex items-center gap-1 text-muted-foreground transition-colors group-hover:text-foreground">
+                View details <ArrowUpRight className="h-3.5 w-3.5" />
+              </span>
+            </Link>
           </Reveal>
         ))}
       </div>
@@ -448,7 +481,13 @@ export function ProjectsSection({ items }: { items: Project[] }) {
       <div className="mt-14 space-y-5">
         {items.map((p, i) => (
           <Reveal key={p.id} delay={i * 0.05}>
-            <article className="grid gap-8 rounded-3xl border border-border bg-surface-2/50 p-8 transition-colors hover:border-[color:var(--accent)]/45 lg:grid-cols-[0.9fr_1.1fr] lg:p-10">
+            <article className="rounded-3xl border border-border bg-surface-2/50 p-8 transition-colors hover:border-[color:var(--accent)]/45 lg:p-10">
+              <Link
+                to="/work/$slug"
+                params={{ slug: p.slug ?? "" }}
+                aria-label={`View details for ${p.name}`}
+                className="group grid gap-8 lg:grid-cols-[0.9fr_1.1fr]"
+              >
               <div>
                 <span className="label-mono text-[color:var(--accent)]">
                   Project {String(i + 1).padStart(2, "0")}
@@ -465,24 +504,6 @@ export function ProjectsSection({ items }: { items: Project[] }) {
                     loading="lazy"
                     className="mt-6 aspect-video w-full rounded-2xl border border-border object-cover"
                   />
-                )}
-                {(p.external_link || p.github_link) && (
-                  <div className="mt-6 flex gap-2">
-                    {p.external_link && (
-                      <Button asChild variant="outline" size="sm">
-                        <a href={p.external_link} target="_blank" rel="noreferrer">
-                          Visit <ArrowUpRight className="h-3.5 w-3.5" />
-                        </a>
-                      </Button>
-                    )}
-                    {p.github_link && (
-                      <Button asChild variant="ghost" size="sm">
-                        <a href={p.github_link} target="_blank" rel="noreferrer">
-                          Repository
-                        </a>
-                      </Button>
-                    )}
-                  </div>
                 )}
               </div>
               <div>
@@ -510,6 +531,28 @@ export function ProjectsSection({ items }: { items: Project[] }) {
                   </div>
                 )}
               </div>
+              <span className="label-mono flex items-center gap-1 text-muted-foreground transition-colors group-hover:text-foreground lg:col-span-2">
+                View project details <ArrowUpRight className="h-3.5 w-3.5" />
+              </span>
+              </Link>
+              {(p.external_link || p.github_link) && (
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {p.external_link && (
+                    <Button asChild variant="outline" size="sm">
+                      <a href={p.external_link} target="_blank" rel="noreferrer">
+                        Visit <ArrowUpRight className="h-3.5 w-3.5" />
+                      </a>
+                    </Button>
+                  )}
+                  {p.github_link && (
+                    <Button asChild variant="ghost" size="sm">
+                      <a href={p.github_link} target="_blank" rel="noreferrer">
+                        Repository
+                      </a>
+                    </Button>
+                  )}
+                </div>
+              )}
             </article>
           </Reveal>
         ))}

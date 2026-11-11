@@ -27,10 +27,11 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { ImageField } from "./ImageField";
+import { ImageGalleryField } from "./ImageGalleryField";
 import { PageHeader } from "./AdminShell";
 import { polishEntry } from "@/lib/ai-polish.functions";
 
-export type FieldType = "text" | "textarea" | "number" | "switch" | "list" | "image";
+export type FieldType = "text" | "textarea" | "number" | "switch" | "list" | "image" | "gallery";
 
 export interface AiPolishConfig {
   kind: "project" | "experience" | "case_study";
@@ -401,6 +402,11 @@ export function FieldInput({
         onChange={(v) => onChange(v)}
       />
     );
+  }
+
+  if (field.type === "gallery") {
+    const urls = Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : [];
+    return <ImageGalleryField label={field.label} value={urls} onChange={onChange} />;
   }
 
   if (field.type === "list") {
